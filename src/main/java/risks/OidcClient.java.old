@@ -1,0 +1,96 @@
+package risks;
+
+
+import java.net.URI;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.UUID;
+
+import com.nimbusds.oauth2.sdk.*;
+import com.nimbusds.oauth2.sdk.id.*;
+import com.nimbusds.oauth2.sdk.token.*;
+
+import risks.Configuration.*;
+
+
+public class OidcClient {
+
+    private static OidcClient oidcClient;
+    // The authorisation endpoint of the server
+    private URI authzEndpoint = null;
+    
+    // The client identifier provisioned by the server
+    private ClientID clientID = null;
+    
+    // The requested scope values for the token
+    private Scope scope = null;
+    
+    // The client callback URI, typically pre-registered with the server
+    private URI callback = null;
+    
+    // Generate random state string for pairing the response to the request
+    private State state = null;
+    private URI requestURI = null;
+    
+    public static OidcClient getInstance() {
+        if (oidcClient == null) {
+            oidcClient = new OidcClient();
+				}
+				return oidcClient;	
+    }
+    private OidcClient() {
+	// The authorisation endpoint of the server
+	try{
+	    authzEndpoint = new URI(Configuration.AUTH_END_POINT);
+	
+	    // The client identifier provisioned by the server
+	    clientID = new ClientID(Configuration.CLIENT_ID);
+	    
+	    // The requested scope values for the token
+	    scope = new Scope(Configuration.SCOPE);
+	    
+	    // The client callback URI, typically pre-registered with the server
+	    callback = new URI(Configuration.CALLBACK_URI);
+	    
+	    // Generate random state string for pairing the response to the request
+	    state = new State();
+	    
+	    // Build the request
+	AuthorizationRequest request =
+	    new AuthorizationRequest.Builder(
+																			 //new ResponseType(ResponseType.Value.TOKEN), clientID)
+								     new ResponseType(ResponseType.Value.TOKEN), clientID)
+	    .scope(scope)
+	    .state(state)
+	    .redirectionURI(callback)
+	    .endpointURI(authzEndpoint)
+	    .build();
+	// Use this URI to send the end-user's browser to the server
+	requestURI = request.toURI();
+	}
+	catch(Exception ex){
+	    System.err.println(" Exception "+ex);
+	}
+    }
+    public URI getRequestURI(){
+	return requestURI;
+    }
+    public State getState(){
+	return state;
+    }
+		/**
+
+https://tomcat2.bloomington.in.gov/risktrack/callback?client-request-id=faaacdc0-2d83-49a6-8801-0080010000c3#error=unauthorized_client&error_description=MSIS9637%3a+The+authorization+server+does+not+support+the+response+type+%27token%27+for+confidential+clients.&state=RuoIlID4S8gzRXN_2DSTG-Mt0YVFqBjtncAnWAsTaFM
+
+https://tomcat2.bloomington.in.gov/risktrack/callback?code=4pBNAn-ogUyW2HsUq-8-7Q.E30wmbVP2ggBABSObSxsJDMMBeE.jLD_Lvdhw9EZq9vdl8guP6uHwSmY1ITGrBQJLVK3sYX-GO8kGYNo0gF-foMg3nIxl-ho7LGh91rBxd01_2CSm_29H_GtdFJe2o-2Q1gd9nGzV9BYmuuJj-bf5vKZUbtaha1JFlBtFjHtSwgQJX2wzneP0WxRCMMZ8S_v1PTBcOK-2qGEb-26utsD2tVwae7RHeWWlUjF1d3W1QVtWxkBVA8kR-kVt2oexmfjCo352ozBchqiVmnjX425B3OhM6GX4SX-6WIkjBHd_7Ss_2EZirVEbqARyeda_reCasvaWsg-KuEy4-2_37zxTRKbNbjZQo3T8wS5yuxYINVMXJaenQ&state=THofihn2SuR_X_rsYl2SVnCqna0LOpVCdhyn5fNlMHk
+		*/
+}
+

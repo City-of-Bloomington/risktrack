@@ -1,0 +1,122 @@
+<Context reloadable="false"
+	 crossContext="true">
+  <Parameter	
+      name="url"
+      value="https://your server/risktrack/"
+      override="false" />
+
+  <!-- location of saved uploaded files -->
+  <Parameter				 
+      name="server_path"
+      value="directory location on the server"
+      override="false" />
+  
+  <!-- CAS related -->
+  <Parameter 				 	
+      name="serverName"
+      value="url of the server running this app"
+      override="false" />	
+  
+  <Parameter				 
+      name="cas_url"
+      value="cas logout url"
+      override="false" />
+  
+  <Parameter
+      name="casServerLoginUrl"
+      value="cas login url"
+      />
+  
+  <Parameter
+      name="casServerUrlPrefix"
+      value="cas url prefix"
+      />
+  <!-- ADFS related -->
+  <Parameter
+      name="adfs_username"
+      value="unique_name"
+      />
+  <Parameter
+      name="auth_end_point"
+      value="authorize adfs end point url"
+      />
+  <Parameter
+      name="discovery_uri"
+      value="usrl for /adfs/.well-known/openid-configuration"
+      />
+  <Parameter
+      name="token_end_point"
+      value="token end point url"
+      />
+  <Parameter
+      name="call_back_uri"
+      value="this app callback url after login"
+      />
+  <Parameter
+      name="client_id"
+      value="client id from ADFS server"
+      />
+  <Parameter
+      name="client_secret"
+      value="client secret key from ADFS server"
+      />
+  <Parameter
+      name="scope"
+      value="openid"
+      />
+  <!-- LDAP related -->
+  <Parameter
+      name="ldap_url"
+      value="ldap url to get employee info"
+      />
+  
+  <Parameter
+      name="ldap_principle"
+      value="username of the ldap login"
+      />
+  <Parameter
+      name="ldap_password"
+      value="ldap password"
+      />
+  <!-- Dept Attorneys -->
+  <Parameter
+      name="riskManager"
+      value=" "
+      />
+  <Parameter
+      name="riskCounsel"
+      value=" "
+      />  
+  <Parameter
+      name="riskAttorney"
+      value=" "
+      />
+  <Parameter
+      name="safetyDirector"
+      value=" "
+      />
+    <Parameter
+      name="claimAdmin"
+      value=" "
+      />
+  <!-- this app uses mysql to connect to database -->
+  <Resource name="jdbc/MySQL_risk" auth="Container"
+	    type="javax.sql.DataSource" 
+	    username="risktrack username to use"
+	    password="password to login to database"
+	    driverClassName="com.mysql.cj.jdbc.Driver"
+	    url="jdbc:mysql:// set the database url here" 
+	    removeAbandonedOnBorrow="true"
+	    removeAbandonedTimeout="60"
+	    maxWaitMillis="60000"
+	    maxIdle="4"
+	    maxTotal="10"  />
+  <!-- location of the configuration files such log4j2.xml so that it can be fournd-->
+  <Resources>
+    <PostResources
+	base="folder on the server running the app"
+	className="org.apache.catalina.webresources.DirResourceSet"
+	webAppMount="/WEB-INF/classes"/>
+  </Resources>
+  
+</Context> 

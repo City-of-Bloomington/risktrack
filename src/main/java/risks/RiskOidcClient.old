@@ -1,0 +1,139 @@
+package risks;
+
+
+import java.net.URI;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+// import org.pac4j.core.context.WebContext;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.UUID;
+import java.util.Map;
+/**
+import com.nimbusds.oauth2.sdk.*;
+import com.nimbusds.oauth2.sdk.id.*;
+import com.nimbusds.oauth2.sdk.token.*;
+*/
+/**
+import org.pac4j.oidc.config.OidcConfiguration;
+import org.pac4j.oidc.client.OidcClient;
+import org.pac4j.oidc.redirect.OidcRedirectionActionBuilder;
+import risks.Configuration.*;
+*/
+
+public class RiskOidcClient {
+
+    private static RiskOidcClient riskOidcClient;
+    // The authorisation endpoint of the server
+    // Generate random state string for pairing the response to the request
+    // private State state = null;
+    // private URI requestURI = null;
+		// private static OidcClient oidcClient;
+		// private static RiskRedirect riskRedirect;
+    
+    public static RiskOidcClient getInstance() {
+        if (riskOidcClient == null) {
+						/**
+						OidcConfiguration config = new OidcConfiguration();
+						config.setClientId(Configuration.CLIENT_ID);
+						config.setSecret(Configuration.CLIENT_SECRET);
+						config.setDiscoveryURI(Configuration.DISCOVERY_URI);
+						config.setResponseType("token");// id_token
+						config.setScope(Configuration.SCOPE);
+						// config.setCallbackUrl(Configuration.CALLBACK_URI);
+						// config.setClientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
+						// config.setWithState(true);
+						// config.setStateData("custom-state-value");
+
+						oidcClient = new OidcClient(config);
+						oidcClient.setCallbackUrl(Configuration.CALLBACK_URI);
+						// now we need the build request url
+						riskRedirect = new RiskRedirect(oidcClient);
+						*/
+				}
+				return riskOidcClient;	
+    }
+		/**
+		String getAuthorizationRequestUrl(final WebContext context){
+				Map<String, String> map = riskRedirect.buildParams(context);
+				String reqUrl = riskRedirect.buildAuthenticationRequestUrl(map);
+				return reqUrl;
+		}
+		*/
+}
+		/**
+			 we may need to use in package
+			 org.pac4j.oidc.redirect;
+			 OidcRedirectionActionBuilder(final OidcClient client);
+			 we can call that returns the request url
+			 String buildAuthenticationRequestUrl(final Map<String, String> params) {
+        // Build authentication request query string
+        final String queryString;
+        try {
+            queryString = AuthenticationRequest.parse(params.entrySet().stream().collect(
+                Collectors.toMap(Map.Entry::getKey, e -> Collections.singletonList(e.getValue())))).toQueryString();
+        } catch (Exception e) {
+            throw new TechnicalException(e);
+        }
+        return client.getConfiguration().getProviderMetadata().getAuthorizationEndpointURI().toString() + '?' + queryString;
+    }
+
+		 */
+		/**
+    private OidcClient(OidcConfiguration conf) {
+	// The authorisation endpoint of the server
+	try{
+
+			
+	    authzEndpoint = new URI(Configuration.AUTH_END_POINT);
+	
+	    // The client identifier provisioned by the server
+	    clientID = new ClientID(Configuration.CLIENT_ID);
+	    
+	    // The requested scope values for the token
+	    scope = new Scope(Configuration.SCOPE);
+	    
+	    // The client callback URI, typically pre-registered with the server
+	    callback = new URI(Configuration.CALLBACK_URI);
+	    
+	    // Generate random state string for pairing the response to the request
+	    state = new State();
+	    
+	    // Build the request
+	AuthorizationRequest request =
+	    new AuthorizationRequest.Builder(
+																			 //new ResponseType(ResponseType.Value.TOKEN), clientID)
+								     new ResponseType(ResponseType.Value.TOKEN), clientID)
+	    .scope(scope)
+	    .state(state)
+	    .redirectionURI(callback)
+	    .endpointURI(authzEndpoint)
+	    .build();
+	// Use this URI to send the end-user's browser to the server
+	requestURI = request.toURI();
+	}
+	catch(Exception ex){
+	    System.err.println(" Exception "+ex);
+	}
+    }
+    public URI getRequestURI(){
+	return requestURI;
+    }
+    public State getState(){
+	return state;
+    }
+		*/
+		/**
+
+https://tomcat2.bloomington.in.gov/risktrack/callback?client-request-id=faaacdc0-2d83-49a6-8801-0080010000c3#error=unauthorized_client&error_description=MSIS9637%3a+The+authorization+server+does+not+support+the+response+type+%27token%27+for+confidential+clients.&state=RuoIlID4S8gzRXN_2DSTG-Mt0YVFqBjtncAnWAsTaFM
+
+https://tomcat2.bloomington.in.gov/risktrack/callback?code=4pBNAn-ogUyW2HsUq-8-7Q.E30wmbVP2ggBABSObSxsJDMMBeE.jLD_Lvdhw9EZq9vdl8guP6uHwSmY1ITGrBQJLVK3sYX-GO8kGYNo0gF-foMg3nIxl-ho7LGh91rBxd01_2CSm_29H_GtdFJe2o-2Q1gd9nGzV9BYmuuJj-bf5vKZUbtaha1JFlBtFjHtSwgQJX2wzneP0WxRCMMZ8S_v1PTBcOK-2qGEb-26utsD2tVwae7RHeWWlUjF1d3W1QVtWxkBVA8kR-kVt2oexmfjCo352ozBchqiVmnjX425B3OhM6GX4SX-6WIkjBHd_7Ss_2EZirVEbqARyeda_reCasvaWsg-KuEy4-2_37zxTRKbNbjZQo3T8wS5yuxYINVMXJaenQ&state=THofihn2SuR_X_rsYl2SVnCqna0LOpVCdhyn5fNlMHk
+		*/
+
+
