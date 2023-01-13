@@ -206,7 +206,7 @@ public class SearchLegalServ extends TopServlet{
 	out.println("<label for=\"caseNum\">Case #:</label>");
 	out.println("<input name=\"caseNum\" id=\"caseNum\" value=\""+
 		    caseNum+"\""+
-		    " size=\"20\" maxlength=\"20\" />&nbsp;&nbsp;");
+		    " size=\"30\" maxlength=\"50\" />&nbsp;&nbsp;");
 	out.println("<input type=\"checkbox\" name=\"recordOnly\" value=\"y\">");
 	out.println("<label> Record Only </label>");
 	out.println("</td></tr>");

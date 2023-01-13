@@ -18,7 +18,7 @@ import risks.utils.*;
 // comment out this line if you want to use ADFS
 // To use CAS make sure you set the cas filter in web.xml
 //
-@WebServlet(urlPatterns = {"/CasLogin","/caslogin"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/Login","/login"}, loadOnStartup = 1)
 public class Login extends TopServlet{
 
     String cookieName = "";// "cas_session";

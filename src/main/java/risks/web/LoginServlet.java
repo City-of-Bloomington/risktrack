@@ -23,7 +23,7 @@ import risks.utils.*;
  * 
  */
 // uncomment this line if you want to use ADFS
-@WebServlet(urlPatterns = {"/Login"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/OpenIdLogin"}, loadOnStartup = 1)
 public class LoginServlet extends TopServlet {
 
     static Logger logger = LogManager.getLogger(LoginServlet.class);

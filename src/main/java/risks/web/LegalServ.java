@@ -831,7 +831,7 @@ public class LegalServ extends TopServlet{
 	out.println("</select>");
 	out.println("<label for=\"caseNum\">Case #:</label>"+
 		    "<input name=\"caseNum\" id=\"caseNum\" value="+
-		    "\""+caseNum+"\" size=\"10\" maxlength=\"10\" /> ");
+		    "\""+caseNum+"\" size=\"30\" maxlength=\"50\" /> ");
 
 	if(!action.equals("")){
 	    out.println("<input type=\"hidden\" name=\"prevAction\" "+
