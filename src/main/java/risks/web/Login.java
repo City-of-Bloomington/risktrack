@@ -24,6 +24,7 @@ public class Login extends TopServlet{
     String cookieName = "";// "cas_session";
     String cookieValue = "";// ".bloomington.in.gov";
     static Logger logger = LogManager.getLogger(Login.class);
+    static int count = 0;
     /**
      * Generates the login form for all users.
      *
@@ -102,6 +103,13 @@ public class Login extends TopServlet{
 		return;
 	    }
 	}
+	else{
+	    count++;
+	    if(count < 3){
+		String str = url+"Login";
+		res.sendRedirect(str);
+	    }
+	}
 	out.println("<head><title>Risktrack</title></head>");
 	out.println("<body><center>");
 	out.println("<p><font color=red>Unauthorized access, check with IT"+
@@ -143,6 +151,7 @@ public class Login extends TopServlet{
 	boolean success = true;
 	User user = null;
 	String fullName="",role="",dept="", message="";
+	logger.error("username "+username);
 	try{
 	    User user2 = new User(username);
 	    String back = user2.doSelect();
