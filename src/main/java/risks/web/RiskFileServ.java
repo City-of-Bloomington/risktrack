@@ -22,7 +22,7 @@ public class RiskFileServ extends TopServlet{
     static String server_path="";
     static final long serialVersionUID = 24L;
     static Logger logger = LogManager.getLogger(RiskFileServ.class);
-    int maxImageSize = 10000000, maxDocSize=10000000;
+    int maxImageSize = 20000000, maxDocSize=20000000;
     private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
     /**
      * Generates the main upload or view image form.
@@ -56,8 +56,8 @@ public class RiskFileServ extends TopServlet{
 	String id="", risk_id = "", notes="", action2="";
 	
 	String message = "";
-	int maxMemorySize = 20000000; // 10 MB , int of bytes
-	int maxRequestSize = 20000000; // 10 MB
+	int maxMemorySize = 20000000; // 30 MB , int of bytes
+	int maxRequestSize = 20000000; // 30 MB
 	String [] vals;
 	User user = null;
 	HttpSession session = null;
