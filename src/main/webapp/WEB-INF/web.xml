@@ -7,7 +7,8 @@
 <web-app>
   <!-- General description of your web application -->
   <display-name>RiskTrack</display-name>
-	
+  <!-- uncomment if you use CAS -->
+	<!--
     <filter>
       <filter-name>CAS Authentication Filter</filter-name>
       <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
@@ -20,10 +21,6 @@
       <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
       <filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
     </filter>
-    <!--
-      change this filter to something other than /Login if you want to
-      use ADFS for login
-    -->     
   <filter-mapping>
     <filter-name>CAS Authentication Filter</filter-name>
       <url-pattern>/Login</url-pattern>
@@ -36,7 +33,7 @@
     <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
     <url-pattern>/Login</url-pattern>
   </filter-mapping>
-  
+-->  
   <session-config>
     <cookie-config>
       <http-only>true</http-only>        
