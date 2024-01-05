@@ -442,6 +442,16 @@ public class Report extends TopServlet{
 	    String qw = "", str="",str2="", all="";
 	    double t1=0, t2=0, t3=0, t4=0, t5=0, t6=0,
 		d=0, d2=0, d3=0, d4=0, d5=0, d6=0;
+	    /**
+	       select count(*), v.status status, t.typeDesc  type,d.name dept
+	       from tortClaims v left join riskUnifiedTypes t on t.type=v.type
+	       left join empRelated er on er.risk_id=v.id
+	       left join employees e on er.employee_id=e.id
+	       left join deptRelated dr on dr.related_id=v.id
+	       left join departments d on d.id=dr.dept_id or d.id=e.dept_id
+       	       where str_to_date('01/01/2023','%m/%d/%Y') <= v.incidentDate
+	       group by status, type, dept
+	     */
 	    String qc = "select count(*), t.typeDesc type from tortClaims v left join riskUnifiedTypes t on t.type=v.type ";
 	    String qq = "", q = " select count(*),"+
 		"t.typeDesc type,"+
@@ -481,6 +491,7 @@ public class Report extends TopServlet{
 		q += " where "+qw;
 	    }
 	    q += " group by type order by type";
+	    qc += " group by type order by type";
 	    qq = qc;
 	    if(debug){
 		logger.debug(qc);
@@ -565,7 +576,7 @@ public class Report extends TopServlet{
 			" left join empRelated er on v.id=er.risk_id "+
 			" left join deptRelated dr on dr.related_id=v.id "+
 			" left join employees e on e.id=er.employee_id "+
-			" left join departments d on d.id=e.dept_id ";
+			" left join departments d on d.id=e.dept_id or dr.dept_id=d.id ";
 										
 		    s1=0;t1=0;t2=0;t3=0;t4=0;t5=0;
 
@@ -1413,26 +1424,29 @@ public class Report extends TopServlet{
 		    qw = ""; str="";str2="";
 		    cnt = 0; s1=0; s2=0;
 		    d=0; d2=0; t1=0; t2=0; t3=0;t4=0;
-		    qc = "select count(*) from workerComps v ";
-		    q = " select count(*),status,"+
+		    qc = "select count(*) from workerComps v "+
+			" left join empRelated er on er.risk_id=v.id left join employees e on e.id=er.employee_id "+
+			" left join deptRelated dr on dr.related_id=v.id "+
+			" left join departments d on d.id=e.dept_id or d.id=dr.dept_id ";		    
+		    q = " select count(*),v.status status,"  +
+			" concat_ws(', ',d.name,d.division) dp, "+
 			" round(sum(payTtd),2),"+
 			" round(sum(payPpi),2), "+
 			" round(sum(payMed),2) "+
-			" from workerComps v ";
+			" from workerComps v "+
+			" left join empRelated er on er.risk_id=v.id left join employees e on e.id=er.employee_id "+
+			" left join deptRelated dr on dr.related_id=v.id "+
+			" left join departments d on d.id=e.dept_id or d.id=dr.dept_id ";	    
 		    if(!startDate.equals("")){
 			qw = " str_to_date('"+startDate+
-			    "','%m/%d/%Y') <= accidentDate ";
+			    "','%m/%d/%Y') <= v.accidentDate ";
 		    }
 		    if(!endDate.equals("")){
 			if(!qw.equals("")) qw += " and ";
 			qw += " str_to_date('"+endDate+
-			    "','%m/%d/%Y') >= accidentDate ";
+			    "','%m/%d/%Y') >= v.accidentDate ";
 		    }
 		    if(!dept.equals("")){
-			if(!qw.equals("")) qw += " and ";												
-			qw += " dept="+dept;
-			qc += ", employees e, empRelated er ";
-			q += ", employees e, empRelated er ";
 			if(!qw.equals("")) qw += " and ";
 			qw += " v.id = er.risk_id2 and e.id=er.employee_id ";
 			qw += " and e.dept_id="+dept;						
@@ -1441,7 +1455,7 @@ public class Report extends TopServlet{
 			qc += " where "+qw;
 			q += " where "+qw;
 		    }
-		    q += " group by status order by status";
+		    q += " group by dp,status order by status,dp";
 		    qq = qc;
 		    if(debug){
 			logger.debug(qc);
@@ -1460,8 +1474,9 @@ public class Report extends TopServlet{
 			}
 			rs = stmt.executeQuery(qq);
 			all += " <table border width='95%'>"+
-			    "<caption>Workers Comp. by Status </caption>\n";
-			all += " <tr><td><b>Status</b></td>"+
+			    "<caption>Workers Comp. by Department, Status </caption>\n";
+			all += " <tr><td><b>Department </b></td>"+
+			    "<td><b>Status</b></td>"+
 			    "<td align='right'><b>Count</b></td>"+
 			    "<td align='right'><b>%</b></td>"+
 			    "<td align='right'><b>TTD Pay</b></td>"+
@@ -1470,16 +1485,18 @@ public class Report extends TopServlet{
 			    "</tr>";
 			while(rs.next()){ 
 			    s1 = rs.getInt(1);
-			    str = rs.getString(2);
-			    d = rs.getDouble(3);
-			    d2 = rs.getDouble(4);
-			    d3 = rs.getDouble(5);
+			    str = rs.getString(3); // dept
+			    if(str == null) str = "Unknown";
+			    str2 = rs.getString(2); //status
+			    d = rs.getDouble(4);
+			    d2 = rs.getDouble(5);
+			    d3 = rs.getDouble(6);
 			    t1 = t1 +d;
 			    t2 = t2 +d2;
 			    t3 = t3 +d3;
 			    if(str == null) str = "&nbsp";
 			    else if(str.equals("")) str = "Unknown";
-			    all += "<tr><td>"+str+
+			    all += "<tr><td>"+str+"</td><td>"+str2+"</td>"+
 				"</td><td align=right>"+s1+
 				"</td><td align=right>"+
 				Helper.findPercent(s1,cnt)+
@@ -1491,8 +1508,9 @@ public class Report extends TopServlet{
 				format.format(d3)+
 				"</td></tr>";
 			}
-			all += "<tr><td>Total</td><td align=right>"+cnt+
-			    "</td><td>&nbsp;"+
+			all += "<tr><td>Total</td><td>&nbsp;</td>"+
+			    "<td align=right>"+cnt+
+			    "</td><td>&nbsp;</td><td>&nbsp;"+
 			    "</td><td align=right>"+
 			    format.format(t1)+
 			    "</td><td align=right>"+
