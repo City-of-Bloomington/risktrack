@@ -887,9 +887,11 @@ public class Helper{
 	if(files == null || files.size() == 0) return;
 	out.println("<fieldset><legend>Related Files</legend>");
 	out.println("<table>");
-	out.println("<tr><th>Date</th><th>Added by</th><th>File Name</th><th>Notes<th></tr>");
+	out.println("<tr><th>ID</th><th>Date</th><th>Added by</th><th>File Name</th><th>Notes<th></tr>");
 	for(RiskFile one:files){
-	    out.println("<tr><td>"+one.getDate()+"</td>"+
+	    out.println("<tr>"+
+			"<td><a href=\""+url+"RiskFileServ?id="+one.getId()+"\">"+one.getId()+"</a></td>"+			
+			"<td>"+one.getDate()+"</td>"+
 			"<td>"+one.getAddedBy()+"</td>"+
 			"<td><a href=\""+url+"RiskFileServ?action=download&id="+one.getId()+"\">"+one.getOldName()+"</a></td>"+
 			"<td>"+one.getNotes()+"</td></tr>");

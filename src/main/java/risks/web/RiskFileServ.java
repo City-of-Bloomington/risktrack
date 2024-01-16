@@ -257,13 +257,18 @@ public class RiskFileServ extends TopServlet{
 	    }
 	}
 	else if(action.equals("Delete")){
-	    String back = riskFile.doDelete();
-	    if(!back.equals("")){
-		message += back;
-		success = false;
-	    }
-	    else{
-		id="";
+	    String back = riskFile.doSelect();
+	    if(back.isEmpty()){
+		risk_id = riskFile.getRisk_id();
+		back = riskFile.doDelete();
+		if(!back.equals("")){
+		    message += back;
+		    success = false;
+		}
+		else{
+		    message += "Deleted successfully";
+		    id="";
+		}
 	    }
 	}	
 	else if(action.equals("download")){
