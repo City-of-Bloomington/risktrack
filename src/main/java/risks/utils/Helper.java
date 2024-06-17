@@ -562,9 +562,9 @@ public class Helper{
 	    "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />\n"+
 	    "<link rel=\"SHORTCUT ICON\" href=\"/favicon.ico\" />\n"+
 	    "<style type=\"text/css\" media=\"screen\">\n"+
-	    "@import url(\"/skins/default/skin.css\");\n"+
+	    "@import url(\"/risktrack/css/skin.css\");\n"+
 	    "</style>\n"+
-	    "<style type=\"text/css\" media=\"print\">@import url(\"/skins/default/print.css\");</style>\n"+
+	    "<style type=\"text/css\" media=\"print\">@import url(\"/risktrack/css/print.css\");</style>\n"+
 	    "<script src=\"/functions.js\" type=\"text/javascript\"></script>\n"+
 	    "<title>RiskTrack - City of Bloomington, Indiana</title>\n"+
 	    "</head>\n"+

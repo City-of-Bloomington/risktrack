@@ -57,7 +57,7 @@ public class Inserts{
 	    "<meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\" />\n"+
 	    "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />\n"+
 	    "<style type=\"text/css\" media=\"all\">\n"+
-	    "@import url(\"https://apps.bloomington.in.gov/skins/default/screen.css\");\n"+
+	    "@import url(\"/risktrack/css/screen.css\");\n"+
 	    "</style>\n"+
 	    "<style type=\"text/css\">"+  
 	    "table.wide {width:100%;border:none}"+

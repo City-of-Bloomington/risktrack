@@ -1,0 +1,207 @@
+@import '../reset.css';
+/* Set the default styles for common HTML elements */
+body { color:black; background-color:white; margin:0px; font-family:sans-serif; font-size:10pt; }
+
+/* Text formatting */
+strong { font-weight:bold; }
+u { text-decoration:underline; }
+em { font-style:italic; }
+sub { vertical-align:sub; }
+sup { vertical-align:super; }
+code { font-family:monospace; }
+
+a { text-decoration:none; cursor:pointer; }
+a:link { color:#0066CC; background-color:transparent; }
+a:active { color:red; background-color:transparent; }
+a:visited { color:#0066CC;  background-color:transparent; }
+a:hover { color:#0066CC; background-color:transparent; text-decoration:underline; }
+
+img { border:0; }
+
+h1 { color: white; text-align:left; margin:0; font-size:14pt; padding:.25em .5em .25em .5em; }
+h2 { margin:.5em 0em .25em 0em; font-size:14pt; font-weight:bold; }
+h3 { margin-top:.5em; font-size:12pt; font-weight:bold; }
+h4 { margin-top:.5em; font-size:10pt; font-weight:bold; }
+h5 { margin-top:.5em; font-weight:bold; }
+h6 { margin:0; }
+
+p { margin-top:.5em; margin-bottom:.5em; }
+
+form {  }
+fieldset { border:1px solid black; }
+legend { padding:.5em; background:url('images/interface_gradient.gif') top repeat-x; color:white; font-weight:bold; }
+label { font-weight:bold; }
+.required { color:red; background-color:inherit; }
+input { font-family:sans-serif; font-size:8pt; }
+button { font-size:8pt; }
+
+table { border-collapse:collapse; margin:2px; }
+tr { border-bottom:1px solid #bdbdbd; }
+td { padding:.25em .5em .5em .5em; background-color:inherit; vertical-align: top; }
+th { text-align:left; background-color:#dddddd; padding:.25em .5em; vertical-align: top; font-weight:bold; }
+th a:link,th a:visited { color:#3366cc; background-color:inherit; }
+form table { border:none; }
+
+ul { margin-top:.25em; }
+ul.compact,ul.compact li { list-style-type:none; margin:0; padding:0; }
+li { margin-top:5px; margin-bottom:1px; }
+li.current>a { background-color:#cccccc; width:100%; }
+
+ul.inline { list-style-type:none; }
+ul.inline li { display:inline; margin-left:1em; margin-right:1em; }
+
+
+/* Top Banner stuff */
+#banner { height:66px; border-bottom:2px solid black; background:url('images/banner_gradient.gif') top repeat-x; padding:2px 0px 2px 2px; }
+#application_name { height: 62px; background:url('images/citylogo-white.gif') top left no-repeat; color:white; text-align:left; padding-top:12px; padding-left:80px; font-size:16pt; }
+#location_name { position:absolute; top:38px; left:80px; color:white; text-align:left; font-size:10pt; padding-top:1px; }
+#banner a { color:white; text-decoration:none; }
+
+/* Used to create a menu bar across any div */
+.menuBar { width:100%; border-bottom:2px solid black; background-color:#FFFFFF; font-size:12px; }
+.menuBar ul { width:100%; height:1em; list-style-type:none; margin:0; padding:0; }
+.menuBar li { float:left; margin-left:1.5em; list-style-type:none; }
+.menuBar a { font-weight:bold; }
+	/* This lets us put small forms into the menubar without hurting the layout too bad */
+	.menuBar form { margin:0; padding:0; display:inline; height:1em; }
+	.menuBar form fieldset { margin:0; padding:0; border:0; display:inline; }
+
+/* These are for the boxes on the sides of the page */
+.sidebar { width:250px; font-size:12px; margin-top:1em; margin-left:.5em; padding:0em .25em 0em .25em; }
+.sidebar ul { list-style-type:none; margin-left:.5em; padding:0; }
+.sidebar ul a { display:inline; font-weight:bold; }
+.sidebar li { background:url('images/bullet_textarrow_right.gif') no-repeat 0 .5em; padding:4px 1px 6px 15px; border-bottom:1px solid #bdbdbd; vertical-align:top; }
+.sidebar fieldset { border:0; }
+.sidebar legend { display:none; }
+.sidebar div { margin-bottom:2em; }
+.sidebar div h1 { width:250px; background:url('images/sidebar_gradient.gif') top left no-repeat; height:21px; color:white; font-family: serif; font-size:14pt; margin:0; text-align:left; border:0; }
+.sidebar div h1 a { background:url('images/sidebar_gradient.gif') top left no-repeat; height:30px; color:white; }
+.sidebar input { width:140px; }
+	h1 form { margin:0; padding:0; display:inline; height:1em; }
+	h1 form fieldset { margin:0; padding:0; border:0; display:inline; }
+.sidebar #login input { width:80px; }
+
+.left { float:left; clear:left; }
+.right { float:right; clear:right; }
+
+/* Breadcrumb class for navigational items */
+.breadcrumbs div h1 { background:url('images/interface_gradient.gif') top left repeat-x; }
+.breadcrumbs ul { margin:4px 0 2px 0; }
+.breadcrumbs li { display:inline; list-style-type:none; }
+.breadcrumbs li a { padding-right:8px; background:url('images/breadcrumb.gif') no-repeat right; margin-right:8px; font-size:10px; color:#333333; }
+table div.breadcrumbs ul { margin:0; padding:0; }
+
+/*  mainContent allows for 3 columns,	*/
+/*	backendContent allows for 2 columns	*/
+#mainContent { background-color:inherit; margin-left:303px; margin-top:1em; }
+#mainContent h1 { background:url('images/grey_gradient.gif') top left repeat-x; background-color:#616161; }
+
+.contextualMenu { background-color:#fba500; color:black; border:2px solid black; margin-bottom:1em; margin-top:1em; }
+.contextualMenu div { display:inline; }
+.contextualMenu span.title { background:inherit; color:white; font-size:12pt; font-weight:bold; border:0; padding-left:1em; padding-right:0; }
+.contextualMenu ul,.contextualMenu li { display:inline; margin:0; padding:0; list-style-type:none; }
+.contextualMenu a {  }
+.contextualMenu a:hover { color:white; background-color:inherit; }
+	/* This lets us put small forms into the menubar without hurting the layout too bad */
+	.contextualMenu form { margin:0; padding:0; display:inline; height:1em; }
+	.contextualMenu form fieldset { margin:0; padding:0; border:0; display:inline; }
+
+/* Used to draw fancy bordered boxes around content */
+#mainContent .interfaceBox {  }
+#mainContent .interfaceBox img { margin:0; }
+
+#mainContent .interfaceBox h1 { background:url('images/interface_gradient.gif') top left repeat-x; background-color:#214081; color:white; font-size:14pt; padding:.25em .5em .25em .5em; }
+#mainContent .interfaceBox h1 a { margin:0px; height:20px; color:white; }
+#mainContent .interfaceBox h1 form { margin:0; padding:0; display:inline; height:1em; }
+#mainContent .interfaceBox h1 form fieldset { margin:0; padding:0; border:0; display:inline; }
+
+/* For pages with tab-type system on them */
+.tabBar ul { list-style: none; margin:0; padding-bottom:7px; border-bottom:1px solid gray; font-weight:bold; white-space:nowrap; }
+.tabBar li { display:inline; margin:0 2px; }
+.tabBar a { border-bottom:4px solid white; color:#999999; }
+.tabBar a.current { border-color:#ff6600; color:#0066ff; }
+.tabBar a:hover { border-color:#ff6600; color:#666666; }
+
+.tabPage { }
+.tabPage > .interfaceBox { margin-left:1em; margin-right:1em; }
+
+/* Page Navigation Stuff */
+.pageNavigation { }
+.pageNavigation li { display:inline; }
+.pageNavigation a { }
+.pageNavigation button { }
+
+#footer { font-size:10pt; text-align:center; clear:both; margin-top:1em; }
+#footer p { font-size: 9px; color: #666666; margin:0 2em 2em 0; }
+
+/*  Custom buttons for forms */
+button { cursor:pointer; overflow:hidden; vertical-align:middle; }
+
+button.addSmall { width:15px; height:15px; padding-top:15px; background: url('images/addSmall.gif') no-repeat; border:0; }
+button.delete { width:15px; height:15px; padding-top:15px; background: url('images/deleteSmall.gif') no-repeat; border:0; }
+button.excel { width:16px; height:16px; padding-top:16px; background: url('images/excel.gif') no-repeat; border:0; }
+button.printSmall { width:16px; height:16px; padding-top:16px; background: url('images/pagetools/print.gif') no-repeat; border:0; }
+
+button.login { width:52px; height:15px; padding-top:15px; background: url('images/login.gif') no-repeat; border:0; }
+button.submit { width:70px; height:15px; padding-top:15px; background: url('images/submit.gif') no-repeat; border:0; }
+button.save { width:52px; height:15px; padding-top:15px; background: url('images/save.gif') no-repeat; border:0; }
+
+/* All hrefs that are to be rendered as buttons need to include the button class. */
+/* Technique taken from http://www.evotech.net/blog/2007/09/css-image-replacement-method */
+a.button {
+	display:-moz-inline-box; /* Fix for Mozilla */
+	display:inline-block;
+	background:transparent none 0 0 no-repeat;
+	font:0/0 Arial; /* Fix for Safari, With just font-size:0, Safari renders a 1px underline */
+	color:rgba(255,255,255,0) !important; /* If Safari does render the underline, at least it will be white or transparent */
+	overflow:hidden;
+	vertical-align:middle;
+}
+
+/* Image Replacements for hrefs that are to be rendered as buttons */
+a.add { width:15px; height:15px; background-image:url('images/addSmall.gif'); }
+a.edit { width:15px; height:15px; background-image:url('images/editSmall.gif'); }
+a.delete { width:15px; height:15px; background-image:url('images/deleteSmall.gif'); }
+
+a.cancel { width:69px; height:15px; background-image:url('images/cancel.gif'); }
+
+a.previous { width:16px; height:16px; background-image:url('images/previous.png'); }
+a.next { width:16px; height:16px; background-image:url('images/next.png'); }
+a.first { width:22px; height:22px; background-image:url('images/player_start.png'); }
+a.last { width:22px; height:22px; background-image:url('images/player_end.png'); }
+
+/* Custom Icons for mime types */
+.jpg { height:16px; padding-left:18px; background: url('images/icons/jpg.png') no-repeat; }
+.png { height:16px; padding-left:18px; background: url('images/icons/jpg.png') no-repeat; }
+.gif { height:16px; padding-left:18px; background: url('images/icons/gif.png') no-repeat; }
+.tiff { height:16px; padding-left:18px; background: url('images/icons/tiff.png') no-repeat; }
+.pdf { height:16px; padding-left:18px; background: url('images/icons/pdf.png') no-repeat; }
+.doc { height:16px; padding-left:18px; background: url('images/icons/doc.png') no-repeat; }
+.xls { height:16px; padding-left:18px; background: url('images/icons/xls.png') no-repeat; }
+.rtf { height:16px; padding-left:18px; background: url('images/icons/rtf.png') no-repeat; }
+.zip { height:16px; padding-left:18px; background: url('images/icons/zip.png') no-repeat; }
+.gz { height:16px; padding-left:18px; background: url('images/icons/gz.png') no-repeat; }
+.txt { height:16px; padding-left:18px; background: url('images/icons/txt.png') no-repeat; }
+.wmv { height:16px; padding-left:18px; background: url('images/icons/windowsMedia.png') no-repeat; }
+.mov { height:16px; padding-left:18px; background: url('images/icons/quicktime.png') no-repeat; }
+.rm { height:16px; padding-left:18px; background: url('images/icons/real.png') no-repeat; }
+.ram { height:16px; padding-left:18px; background: url('images/icons/real.png') no-repeat; }
+.mp3 { height:16px; padding-left:18px; background: url('images/icons/sound.png') no-repeat; }
+.wma { height:16px; padding-left:18px; background: url('images/icons/windowsMedia.png') no-repeat; }
+
+
+/* Controls how error messages are displayed */
+#errorMessages { border:2px solid black; }
+#errorMessages h1 { color:red; background-color:inherit; }
+#warning { border:2px solid red; }
+#warning h1 { color:inherit; background-color:red; font-size:14pt; }
+
+/* Various Styles for text */
+.copyright { text-align:center; font-size:10pt; }
+.comments { color:red; background-color:inherit; }
+.money { text-align:right; }
+.void,.void td { text-decoration:line-through; }
+.total { border-top:1px solid black; text-align:right; }
+.total td { padding-bottom:1em; }
+.instructions { }
+.unpublished { text-decoration:line-through; }
