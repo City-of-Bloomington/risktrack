@@ -24,17 +24,23 @@ public class TortClaim extends Risk{
 	comments="",  law_firm_id="",
 	cityTotalCost="",paidByCity2City="",paidByInsur2City="",
 	deductible2="",
-	incidentDate="",opened="",recordOnly="",
-	received="", otherType="", closed=""; // dates
+
+	opened="",
+	recordOnly="",
+	otherType="", closed=""; // dates
     
     String incident = "", // instead of location
 	paidByCity = "",paidByInsur = "",settled = "",    // double
 	requestAmount = "", miscByCity = "", cityAutoInc="",
 	filed="", subInsur="", paidByRisk="";
-		
-    // vehicle not used anymore (will be deleted)
-    String autoMake ="", autoModel="", autoYear="", autoPlate="", vin="";
-		
+
+    String received="",
+	incidentDate="";	
+
+    // added on 8/22/2024
+    String denialLetterDate="", deadlineDate=""; // dates
+    String lawsuit="", bodilyInvolved=""; // checkbox
+    
     List<Employee> employees = null;
     List<Insurance> insurances = null;
     List<Auto> autos = null;
@@ -83,12 +89,19 @@ public class TortClaim extends Risk{
 		     String val24,
 		     String val25,
 		     String val26,
-		     String val27
+		     String val27,
+
+		     String val28,
+		     String val29,
+		     String val30,
+		     String val31
 		     ){
 	debug = deb;
 	setVals(val, val2, val3, val4, val5, val6, val7, val8, val9, val10,
 		val11, val12, val13, val14, val15, val16, val17, val18, val19, val20,
-		val21, val22, val23, val24, val25, val26, val27);
+		val21, val22, val23, val24, val25, val26, val27,
+		val28,val29,val30,val31
+		);
     }
     void setVals(
 		 String val,
@@ -117,7 +130,12 @@ public class TortClaim extends Risk{
 		 String val24,
 		 String val25,
 		 String val26,
-		 String val27
+		 String val27,
+
+		 String val28,
+		 String val29,
+		 String val30,
+		 String val31		 
 		 ){
 		
 	setId(val);
@@ -152,6 +170,11 @@ public class TortClaim extends Risk{
 				
 	setPaidByRisk(val26);
 	setLawFirmId(val27);
+
+	setDenialLetterDate(val28);
+	setDeadlineDate(val29);
+	setLawsuit(val30);
+	setBodilyInvolved(val31);
     }		
 		
     //
@@ -287,7 +310,23 @@ public class TortClaim extends Risk{
     public void setLawFirmId(String val){
 	if(val != null)
 	    law_firm_id = val;
-    }		
+    }
+    public void setDenialLetterDate(String val){
+	if(val != null)
+	    denialLetterDate = val;
+    }
+    public void setDeadlineDate(String val){
+	if(val != null)
+	    deadlineDate = val;
+    }
+    public void setLawsuit(val){
+	if(val != null)
+	    lawsuit = val;
+    }
+    public vid setBodilyInvolved(String val){
+	if(val != null)
+	    bodilyInvolved = val;
+    }
     //
     // getters
     //
@@ -388,6 +427,19 @@ public class TortClaim extends Risk{
     public String  getRecordOnly(){
 	return recordOnly;
     }
+    public String getDenialLetterDate(){
+	return denialLetterDate;
+    }
+    public String getDeadlineDate(){
+	return deadlineDate;
+    }
+    public String getLawsuit(){
+	return lawsuit;
+    }
+    public String getBodilyInvolved(){
+	return bodilyInvolved;
+    }
+    
     public String toString(){
 	return id;
     }
@@ -529,7 +581,7 @@ public class TortClaim extends Risk{
 	    qq = "insert into tortClaims values ("+
 		"?,?,?,?,?, ?,?,?,?,?,"+
 		"?,?,?,?,?, ?,?,?,?,?,"+
-		"?,?,?,?,?, ?,?)";
+		"?,?,?,?,?, ?,?, ?,?,?,?)";
 	    logger.debug(qq);
 	    stmt3 = con.prepareStatement(qq);
 	    back = setParams(stmt3, true);
@@ -699,7 +751,30 @@ public class TortClaim extends Risk{
 	    else {
 		stmt.setString(jj++, law_firm_id);
 	    }						
-
+	    if(denialLetterDate.isEmpty())
+		stmt.setNull(jj++, Types.DATE);
+	    else{
+		java.util.Date date_tmp = df.parse(denialLetterDate);
+		stmt.setDate(jj++, new java.sql.Date(date_tmp.getTime()));
+	    }
+	    if(deadlineDate.equals(""))
+		stmt.setNull(jj++, Types.DATE);
+	    else{
+		java.util.Date date_tmp = df.parse(deadlineDate);
+		stmt.setDate(jj++, new java.sql.Date(date_tmp.getTime()));
+	    }
+	    if(lawsuit.isEmpty()){
+		stmt.setNull(jj++, Types.CHAR);
+	    }
+	    else {
+		stmt.setString(jj++, "y");
+	    }
+	    if(bodilyInvolved.isEmpty()){
+		stmt.setNull(jj++, Types.CHAR);
+	    }
+	    else {
+		stmt.setString(jj++, "y");
+	    }	    	    
 	}
 	catch(Exception ex){
 	    logger.error(ex);
@@ -719,7 +794,10 @@ public class TortClaim extends Risk{
 	    "incident=?,comments=?,opened=?,received=?,closed=?,"+
 	    "filed=?,subInsur=?,expires=?,cityTotalCost=?,paidByCity2City=?,"+
 	    "paidByInsur2City=?,deductible2=?,otherType=?,recordOnly=?,paidByRisk=?,"+
-	    "law_firm_id=? where id=? ";
+	    "law_firm_id=? "+
+	    "denialLetterDate=?,deadlineDate=?,"+
+	    "lawsuit=?,bodilyInvolved=? "+
+	    "where id=? ";
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -802,7 +880,10 @@ public class TortClaim extends Risk{
 	    "date_format(expires,'%m/%d/%Y'), "+
 	    "cityTotalCost,paidByCity2City,paidByInsur2City,deductible2, "+
 	    "otherType,recordOnly,"+
-	    "paidByRisk,law_firm_id "+
+	    "paidByRisk,law_firm_id, "+
+	    "date_format(denialLetterDate,'%m/%d/%Y'), "+
+	    "date_format(deadlineDate,'%m/%d/%Y'), "+
+	    "lawsuit,bodilyInvolved "+
 	    " from tortClaims where id=?";
 	String str="";
 	con = Helper.getConnection();
@@ -845,7 +926,12 @@ public class TortClaim extends Risk{
 			rs.getString(23),
 			rs.getString(24),
 			rs.getString(25),
-			rs.getString(26));
+			rs.getString(26),
+			rs.getString(27),
+			rs.getString(28),
+			rs.getString(29),
+			rs.getString(30)
+			);
 	    }
 	    else{
 		return "Record "+id+" Not Found";
