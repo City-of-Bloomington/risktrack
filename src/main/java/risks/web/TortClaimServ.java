@@ -76,6 +76,10 @@ public class TortClaimServ extends TopServlet{
 	String insurer = "", subInsur="", adjusterEmail="",
 	    attorney="", attorneyPhone="", attorneyEmail="";
 	//
+	String denialLetterDate="", deadlineDate=""; // dates
+	String lawsuit="", bodilyInvolved=""; // checkbox	
+	
+	//
 	// removed 
 	// claimToInsurance agreedAmount
 	//
@@ -249,6 +253,19 @@ public class TortClaimServ extends TopServlet{
 	    else if (name.equals("recordOnly")) {
 		recordOnly = value;
 	    }
+	    else if (name.equals("denialLetterDate")) {
+		denialLetterDate = value;
+	    }
+	    else if (name.equals("deadlineDate")) {
+		deadlineDate = value;
+	    }
+	    else if (name.equals("lawsuit")) {
+		 lawsuit = value;
+	    }
+	    else if (name.equals("bodilyInvolved")) {
+		 bodilyInvolved = value;
+	    }	    
+	    
 	    else if (name.equals("action2")){
 		if(!value.equals(""))
 		    action = value;  
@@ -258,7 +275,6 @@ public class TortClaimServ extends TopServlet{
 		action = value;  
 	    }
 	}
-
 	// System.err.println(" action & prev :"+action+" "+prevAction);
 	if(!action.equals("") &&
 	   !action.equals("Update") &&
@@ -419,6 +435,10 @@ public class TortClaimServ extends TopServlet{
 	    tc.setRecordOnly(recordOnly);
 	    tc.setPaidByRisk(paidByRisk);
 	    tc.setLawFirmId(law_firm_id);
+	    tc.setDenialLetterDate(denialLetterDate);
+	    tc.setDeadlineDate(deadlineDate);
+	    tc.setLawsuit(!lawsuit.isEmpty());
+	    tc.setBodilyInvolved(!bodilyInvolved.isEmpty());
 	    String back = tc.doSave();
 	    if(back.equals("")){
 		id = tc.getId();
@@ -560,6 +580,10 @@ public class TortClaimServ extends TopServlet{
 	    tc.setRecordOnly(recordOnly);
 	    tc.setPaidByRisk(paidByRisk);
 	    tc.setLawFirmId(law_firm_id);
+	    tc.setDenialLetterDate(denialLetterDate);
+	    tc.setDeadlineDate(deadlineDate);
+	    tc.setLawsuit(!lawsuit.isEmpty());
+	    tc.setBodilyInvolved(!bodilyInvolved.isEmpty());	    
 	    String back = tc.doUpdate();
 	    if(!back.equals("")){
 		message += back;
@@ -701,6 +725,11 @@ public class TortClaimServ extends TopServlet{
 		recordOnly = tc.getRecordOnly();
 		paidByRisk = tc.getPaidByRisk();
 		law_firm_id = tc.getLawFirmId();
+		denialLetterDate = tc.getDenialLetterDate();
+		deadlineDate = tc.getDeadlineDate();
+		lawsuit = (tc.getLawsuit())?"checked=\"checked\"":"";
+		bodilyInvolved = (tc.getBodilyInvolved())?"checked=\"checked\"":"";
+		
 		if(!(dept_id.equals("") || dept_id.equals("0"))){
 		    Department dp = new Department(debug, dept_id);
 		    back = dp.doSelect();
@@ -718,10 +747,12 @@ public class TortClaimServ extends TopServlet{
 		action = "";
 	    }
 	}
-	if(!cityAutoInc.equals("")) cityAutoInc = "checked";
-	if(!filed.equals("")) filed = "checked";
-	if(!subInsur.equals("")) subInsur = "checked";
-	if(!recordOnly.equals("")) recordOnly = "checked";
+	if(!cityAutoInc.equals("")) cityAutoInc = "checked=\"checked\"";
+	if(!filed.equals("")) filed = "checked=\"checked\"";
+	if(!subInsur.equals("")) subInsur = "checked=\"checked\"";
+	if(!recordOnly.equals("")) recordOnly = "checked=\"checked\"";
+	if(!lawsuit.isEmpty()) lawsuit = "checked=\"checked\"";
+	if(!bodilyInvolved.isEmpty()) bodilyInvolved = "checked=\"checked\"";
 	if(!prevAction.equals("") && action.equals("")) action = prevAction;
 	//
 	// Inserts
@@ -812,8 +843,11 @@ public class TortClaimServ extends TopServlet{
 	}
 	out.println("</select>, ");
 	out.println("<input type=\"checkbox\" name=\"recordOnly\" value=\"y\" "+
-		    recordOnly+"><label> Record Only </label>");
-
+		    recordOnly+" /><label> Record Only </label>");
+	out.println("<input type=\"checkbox\" name=\"lawsuit\" value=\"y\" "+
+		    lawsuit+" /><label> Lawsuit </label>");	
+	out.println("<input type=\"checkbox\" name=\"bodilyInvolved\" value=\"y\" "+
+		    bodilyInvolved+" /><label> Bodily Involved </label>");
 	if(!action.equals("")){
 	    out.println("<input type=\"hidden\" name=\"prevAction\" "+
 			"value=\""+action+"\">");
@@ -869,6 +903,19 @@ public class TortClaimServ extends TopServlet{
 		    received+"\" size=\"10\" maxlength=\"10\" class=\"date\""+
 		    "onchange=\"checkDate(this)\" "+
 		    " />");
+	out.println("<label for=\"deadlineDate\"> Deadline Date:</label>"+
+		    "<input name=\"deadlineDate\" id=\"deadlineDate\" value=\""+
+		    deadlineDate+"\" size=\"10\" maxlength=\"10\" class=\"date\""+
+		    "onchange=\"checkDate(this)\" "+
+		    " /></td></tr>");
+	
+	out.println("<tr><td>");	
+	out.println("<label for=\"denialLetterDate\"> Denial Letter Sent Date:</label>"+
+		    "<input name=\"denialLetterDate\" id=\"denialLetterDate\" value=\""+
+		    denialLetterDate+"\" size=\"10\" maxlength=\"10\" class=\"date\""+
+		    "onchange=\"checkDate(this)\" "+
+		    " />");	
+	
 	out.println("<label for=\"closed\">Closed Date:</label>"+
 		    "<input name=\"closed\" id=\"closed\" value=\""+
 		    closed+"\" size=\"10\" maxlength=\"10\" "+

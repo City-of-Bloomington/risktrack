@@ -93,8 +93,8 @@ public class TortClaim extends Risk{
 
 		     String val28,
 		     String val29,
-		     String val30,
-		     String val31
+		     boolean val30,
+		     boolean val31
 		     ){
 	debug = deb;
 	setVals(val, val2, val3, val4, val5, val6, val7, val8, val9, val10,
@@ -134,8 +134,8 @@ public class TortClaim extends Risk{
 
 		 String val28,
 		 String val29,
-		 String val30,
-		 String val31		 
+		 boolean val30,
+		 boolean val31		 
 		 ){
 		
 	setId(val);
@@ -319,13 +319,13 @@ public class TortClaim extends Risk{
 	if(val != null)
 	    deadlineDate = val;
     }
-    public void setLawsuit(val){
-	if(val != null)
-	    lawsuit = val;
+    public void setLawsuit(boolean val){
+	if(val)
+	    lawsuit = "y";
     }
-    public vid setBodilyInvolved(String val){
-	if(val != null)
-	    bodilyInvolved = val;
+    public void setBodilyInvolved(boolean val){
+	if(val)
+	    bodilyInvolved = "y";
     }
     //
     // getters
@@ -433,11 +433,11 @@ public class TortClaim extends Risk{
     public String getDeadlineDate(){
 	return deadlineDate;
     }
-    public String getLawsuit(){
-	return lawsuit;
+    public boolean getLawsuit(){
+	return !lawsuit.equals("");
     }
-    public String getBodilyInvolved(){
-	return bodilyInvolved;
+    public boolean getBodilyInvolved(){
+	return !bodilyInvolved.isEmpty();
     }
     
     public String toString(){
@@ -794,7 +794,7 @@ public class TortClaim extends Risk{
 	    "incident=?,comments=?,opened=?,received=?,closed=?,"+
 	    "filed=?,subInsur=?,expires=?,cityTotalCost=?,paidByCity2City=?,"+
 	    "paidByInsur2City=?,deductible2=?,otherType=?,recordOnly=?,paidByRisk=?,"+
-	    "law_firm_id=? "+
+	    "law_firm_id=?, "+
 	    "denialLetterDate=?,deadlineDate=?,"+
 	    "lawsuit=?,bodilyInvolved=? "+
 	    "where id=? ";
@@ -809,7 +809,7 @@ public class TortClaim extends Risk{
 	try{
 	    stmt = con.prepareStatement(qq);
 	    back = setParams(stmt, false);
-	    stmt.setString(27, id);
+	    stmt.setString(31, id);
 	    stmt.executeUpdate();
 	}
 	catch(Exception ex){
@@ -929,8 +929,8 @@ public class TortClaim extends Risk{
 			rs.getString(26),
 			rs.getString(27),
 			rs.getString(28),
-			rs.getString(29),
-			rs.getString(30)
+			rs.getString(29) != null,
+			rs.getString(30) != null
 			);
 	    }
 	    else{
@@ -1062,7 +1062,15 @@ public class TortClaim extends Risk{
     }		
 	
 }
+/**
+alter table tortClaims add denialLetterDate date;
+alter table tortClaims add deadlineDate date;
+alter table tortClaims add lawsuit char(1);
+alter table tortClaims add bodilyInvolved char(1);
 
+
+
+ */
 
 
 

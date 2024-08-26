@@ -188,7 +188,10 @@ public class TortClaimList{
 	    "c.cityTotalCost,c.paidByCity2City,c.paidByInsur2City,"+
 	    "c.deductible2, "+
 	    "c.otherType,c.recordOnly,"+
-	    "c.paidByRisk,c.law_firm_id ";
+	    "c.paidByRisk,c.law_firm_id, "+
+	    "date_format(c.denialLetterDate,'%m/%d/%Y'), "+
+	    "date_format(c.deadlineDate,'%m/%d/%Y'), "+
+	    "c.lawsuit,c.bodilyInvolved ";
 	String qw = "";
 	String str="";
 	boolean insurFlag = false, empFlag = false;
@@ -516,7 +519,12 @@ public class TortClaimList{
 				  rs.getString(24),
 				  rs.getString(25),
 				  rs.getString(26),
-				  rs.getString(27));
+				  rs.getString(27),
+				  rs.getString(28),
+				  rs.getString(29),
+				  rs.getString(30) != null,
+				  rs.getString(31) != null);
+				  
 		if(torts == null)
 		    torts =new ArrayList<>();
 		if(!torts.contains(one))
