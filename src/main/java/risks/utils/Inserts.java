@@ -192,6 +192,7 @@ public class Inserts{
 	    "<h3 class=\"titleBar\">Reports</h3>\n"+
 	    "<ul>\n"+
 	    "<li><a href=\""+url+"Report\">Reports</a></li>\n"+
+	    "<li><a href=\""+url+"TortReport\">Tort Report</a></li>\n"+	    
 	    "</ul></div>";
 	return ret;
 

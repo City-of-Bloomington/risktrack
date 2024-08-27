@@ -354,6 +354,10 @@ public class SearchClaimServ extends TopServlet{
 		    "id=\"whichDate\" value=\"received\">Received</input>");
 	out.println("<input type=\"radio\" name=\"whichDate\" "+
 		    "id=\"whichDate\" value=\"closed\">Closed</input>");
+	out.println("<input type=\"radio\" name=\"whichDate\" "+
+		    "id=\"whichDate\" value=\"denialLetterDate\">Denial Letter</input>");
+	out.println("<input type=\"radio\" name=\"whichDate\" "+
+		    "id=\"whichDate\" value=\"deadlineDate\">Deadline</input>");	
 	//
 	out.println("</td></tr>");
 	out.println("<tr><td><label for=\"dateFrom\">Date, from:</label>");
@@ -438,32 +442,35 @@ public class SearchClaimServ extends TopServlet{
 	String [] titles = {"Claim ID",
 	    "Claim Num",
 	    "Claimant",
-
 	    "Type",
 	    "Status",
+	    
 	    "Policy",
-
 	    "Incident",
 	    "Adjuster",
 	    "Employee Name",
 	    "Auto VIN, make, model, year",
+	    
 	    "City Auto Included",
-
 	    "Incident Date",
 	    "Claim Sent",
 	    "Claim Received",
 	    "Closed",
+	    
+	    "Deadline Date",
+	    "Denial Letter Date",
 	    "Amount Requested",
-
 	    "Amount Settled",
 	    "Paid by City",
+	    
 	    "Paid by Insurance",
 	    "Misc Paid by City",
 	};
 	boolean [] show = {true, true, true, true, true,
 	    true, true, true, true, true,
 	    true, true, true, true, true,
-	    true, true, true, true, true
+	    true, true, true, true, true,
+	    true, true
 	};
 	String action=""; 
 	String  dateFrom="", dateTo="", whichDate="", whichAmount="",
@@ -909,30 +916,41 @@ public class SearchClaimServ extends TopServlet{
 		    out.println("<td>"+str+"</td>");
 		}
 		if(show[15]){
+		    str = tc.getDeadlineDate();
+		    if(str.equals("")) str = "&nbsp;";
+		    out.println("<td>"+str+"</td>");
+		}		
+		if(show[16]){
+		    str = tc.getDenialLetterDate();
+		    if(str.equals("")) str = "&nbsp;";
+		    out.println("<td>"+str+"</td>");
+		}		
+		if(show[17]){
 		    str = tc.getRequestAmount();
 		    if(str.equals("")|| str.equals("0")) str = "&nbsp;";
 		    out.println("<td>"+str+"</td>");
 		}
-		if(show[16]){
+		if(show[18]){
 		    str = tc.getSettled();
 		    if(str.equals("")|| str.equals("0")) str = "&nbsp;";
 		    out.println("<td>"+str+"</td>");
 		}
-		if(show[17]){
+		if(show[19]){
 		    str = tc.getPaidByCity();
 		    if(str.equals("")||str.equals("0")) str = "&nbsp;";
 		    out.println("<td>"+str+"</td>");
 		}
-		if(show[18]){
+		if(show[20]){
 		    str = tc.getPaidByInsur();
 		    if(str.equals("")|| str.equals("0")) str = "&nbsp;";
 		    out.println("<td>"+str+"</td>");
 		}
-		if(show[19]){
+		if(show[21]){
 		    str = tc.getMiscByCity();
 		    if(str.equals("")||str.equals("0")) str = "&nbsp;";
 		    out.println("<td>"+str+"</td>");
 		}
+		
 		out.println("</tr>");
 	    }
 	    out.println("</table>");

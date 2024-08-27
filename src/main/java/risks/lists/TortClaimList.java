@@ -24,7 +24,7 @@ public class TortClaimList{
     String whichDate="";
     String amountFrom="", amountTo="";
     String whichAmount="", orderBy="c.id desc";
-    String adjuster="", policy="",
+    String adjuster="", policy="", 
 	adjusterPhone="", adjusterEmail="",
 	attorney="",attorneyPhone="",attorneyEmail="",
 	empid="", empTitle="", law_firm_id = "",
@@ -33,6 +33,7 @@ public class TortClaimList{
 	autoNum= "", id="",
 	type="",otherType="", status="", filed="", recordOnly="", claimNum="",
 	incident="", insuranceStatus="", insurer="", cityAutoInc="";
+    boolean activeOnly = false;
     List<TortClaim> torts = null;
     //		
     // basic constructor
@@ -154,6 +155,9 @@ public class TortClaimList{
     public void setInsurer(String val){
 	insurer = val; 
     }
+    public void setActiveOnly(){
+	activeOnly = true;
+    }
     public List<TortClaim> getTorts(){
 	return torts;
     }
@@ -214,13 +218,21 @@ public class TortClaimList{
 		if(!qw.equals("")) qw += " and ";
 		qw += " c.filed is not null ";
 	    }
+	    if(activeOnly){
+		if(!qw.equals("")) qw += " and ";
+		qw += " c.closed is null and c.status = 'Open' ";
+	    }
 	    if(!recordOnly.equals("")){
 		if(!qw.equals("")) qw += " and ";
 		qw += " c.recordOnly is not null ";
 	    }
 	    if(!status.equals("")){
 		if(!qw.equals("")) qw += " and ";
-		qw += " c.status = ? ";
+		qw += " (c.status = ? ";
+		if(status.equals("Open"))
+		qw += " and c.closed is null) ";
+		else
+		qw += " or c.closed is not null) ";		    
 	    }
 	    if(!claimNum.equals("")){
 		if(!qw.equals("")) qw += " and ";
@@ -367,6 +379,7 @@ public class TortClaimList{
 	if(!orderBy.equals("")){
 	    qq += " order by "+orderBy;
 	}
+	// System.err.println(" qq "+qq);
 	if(debug){
 	    logger.debug(qq);
 	}

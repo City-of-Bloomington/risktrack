@@ -19,15 +19,12 @@ public class RiskType{
     }
     public RiskType(boolean deb, String val){
 	debug = deb;
-	if(val != null)
-	    id = val;
+	setId(val);
     }	
     public RiskType(boolean deb, String val, String val2){
 	debug = deb;
-	if(val != null)
-	    id = val;
-	if(val2 != null)
-	    name = val2;
+	setId(val);
+	setName(val2);
     }
     public String getId(){
 	return id;
@@ -35,12 +32,26 @@ public class RiskType{
     public String getName(){
 	return name;
     }
+    public String toString(){
+	return name;
+    }
     //
     // setters
     //	
+    public void setId(String val){
+	if(val != null)
+	    id = val;
+    }
+    public void setName(String val){
+	if(val != null)
+	    name = val;
+    }        
     public void setOtherType(String val){
 	if(val != null)
 	    otherType = val;
+    }
+    public String doSelect(){
+	return doSelect("");
     }
     public String doSelect(String which){
 	Connection con = null;

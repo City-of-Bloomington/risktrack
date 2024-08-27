@@ -40,7 +40,7 @@ public class TortClaim extends Risk{
     // added on 8/22/2024
     String denialLetterDate="", deadlineDate=""; // dates
     String lawsuit="", bodilyInvolved=""; // checkbox
-    
+    RiskType riskType = null;
     List<Employee> employees = null;
     List<Insurance> insurances = null;
     List<Auto> autos = null;
@@ -520,6 +520,28 @@ public class TortClaim extends Risk{
 	}
 	return claiments;
     }
+    public String getClaimentNames(){
+	String all = "";
+	getClaiments();
+	if(claiments != null && claiments.size() > 0){
+	    for(RiskPerson one:claiments){
+		if(!all.isEmpty()) all += ";";
+		all += one.getFullName();
+	    }
+	}
+	return all;
+    }
+    public RiskType getRiskType(){
+	if(!type.isEmpty() && riskType == null){
+	    RiskType rt = new RiskType(debug);
+	    rt.setId(type);
+	    String back = rt.doSelect();
+	    if(back.isEmpty()){
+		riskType = rt;
+	    }
+	}
+	return riskType;
+    }
     public boolean hasClaiments(){
 	getClaiments();
 	return claiments != null && claiments.size() > 0;
@@ -605,6 +627,12 @@ public class TortClaim extends Risk{
 		stmt.setString(jj++, id);
 	    }
 	    stmt.setString(jj++, type);
+	    if(type.equals("6")){ // bodilyInjury
+		bodilyInvolved = "y";
+	    }
+	    if(!closed.isEmpty()){ // closed date
+		status="Closed";
+	    }
 	    stmt.setString(jj++, status);						
 	    if(deductible.equals("")){
 		stmt.setString(jj++, "0");								
@@ -1068,7 +1096,8 @@ alter table tortClaims add deadlineDate date;
 alter table tortClaims add lawsuit char(1);
 alter table tortClaims add bodilyInvolved char(1);
 
-
+update tortclaims set status='Closed' where closed is not null;
+update tortclaims set bodilyInvolved='y' where type=6;
 
  */
 
