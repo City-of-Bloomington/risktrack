@@ -104,7 +104,7 @@ public class TortReport extends TopServlet{
 	out.println("<form name=myForm method=post "+
 		    "onSubmit=\"return validateForm()\">");
 	//
-	out.println("<tr><td></td><td>Department: ");
+	out.println("<tr><th>Department:</th><td>");
 	out.println("<select name=\"dept_id\">");
 	out.println("<option value=\"\">All");
 	if(depts != null){
@@ -113,7 +113,7 @@ public class TortReport extends TopServlet{
 	    }
 	}
 	out.println("</select></td></tr>");
-	out.println("<tr><td align=\"right\" valign=\"middle\"><b>Date Range</b>"+
+	out.println("<tr><td valign=\"middle\"><b>Date Range</b>"+
 		    "</td><td>");
 	out.println("<table><tr><td rowspan=\"2\" valign=\"middle\"><b>from:</b>"+
 		    "</td><td>mm/dd/yyyy</td><td rowspan=\"2\" valign=\"middle\">"+
@@ -127,8 +127,8 @@ public class TortReport extends TopServlet{
 		    "onchange=\"checkPeriod(this)\" >"+
 		    "</td></tr></table>");
 	out.println("</td></tr>");
-	out.println("<tr><td>Status</td>");
-	out.println("<td>&nbsp;</td><td><input type=\"radio\" "+
+	out.println("<tr><th>Status</th>");
+	out.println("<td><input type=\"radio\" "+
 		    "name=\"status\" value=\"\" checked=\"checked\" /> All ");
 	out.println("<input type=\"radio\" name=\"status\" "+
 		    "value=\"Open\" /> Open");
@@ -136,8 +136,8 @@ public class TortReport extends TopServlet{
 		    "value=\"Closed\" /> Closed");
 	
 	out.println("</td></tr>");	
-	out.println("<tr><td>Output Format</td>");
-	out.println("<td>&nbsp;</td><td><input type=\"radio\" "+
+	out.println("<tr><th>Output Format</th>");
+	out.println("<td><input type=\"radio\" "+
 		    "name=\"output\" value=\"html\" checked=\"checked\" /> HTML ");
 	out.println("<input type=\"radio\" name=\"output\" "+
 		    "value=\"csv\" /> CSV (Spreadsheet)");
