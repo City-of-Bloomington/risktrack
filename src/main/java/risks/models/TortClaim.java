@@ -565,6 +565,11 @@ public class TortClaim extends Risk{
 	getWitnesses();
 	return witnesses != null && witnesses.size() > 0;
     }
+    /**
+     * all records updated for deadlineDate with 90 day from date received
+       update tortClaims set deadlineDate = DATE_ADD(received, INTERVAL 90 DAY) where recordOnly is null;
+       
+     */
     //
     // save a new record in the database
     // return "" or any exception thrown by DB
@@ -573,10 +578,11 @@ public class TortClaim extends Risk{
 
 	String back = "";
 	Connection con = null;
-	PreparedStatement stmt = null, stmt2=null, stmt3=null;		
+	PreparedStatement stmt = null, stmt2=null, stmt3=null, stmt4=null;
 	ResultSet rs = null;
 		
 	String qq = "insert into risk_sequences values(0,'claim')";
+	String qq2 = "update tortClaims set deadlineDate = DATE_ADD(received, INTERVAL 90 DAY) where recordOnly is null and id=? ";
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -609,13 +615,20 @@ public class TortClaim extends Risk{
 	    back = setParams(stmt3, true);
 	    if(back.equals(""))
 		stmt3.executeUpdate();
+	    if(deadlineDate.isEmpty()){
+		qq = qq2;
+		stmt4 = con.prepareStatement(qq);
+		stmt4.setString(1, id);
+		stmt4.executeUpdate();
+		doSelect();
+	    }
 	}
 	catch(Exception ex){
 	    logger.error(ex+" : "+qq);
 	    back =  ex.toString()+":"+qq;
 	}
 	finally{
-	    Helper.databaseDisconnect(con, rs, stmt, stmt2, stmt3);
+	    Helper.databaseDisconnect(con, rs, stmt, stmt2, stmt3, stmt4);
 	}
 	return back;
     }						
@@ -812,7 +825,7 @@ public class TortClaim extends Risk{
 
     public String doUpdate(){
 	Connection con = null;
-	PreparedStatement stmt = null;		
+	PreparedStatement stmt = null, stmt2=null;		
 	ResultSet rs = null;
 	String str="", back="";
 	String qq = "";
@@ -826,6 +839,7 @@ public class TortClaim extends Risk{
 	    "denialLetterDate=?,deadlineDate=?,"+
 	    "lawsuit=?,bodilyInvolved=? "+
 	    "where id=? ";
+	String qq2 = "update tortClaims set deadlineDate = DATE_ADD(received, INTERVAL 90 DAY) where recordOnly is null and id=? ";	
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -839,13 +853,20 @@ public class TortClaim extends Risk{
 	    back = setParams(stmt, false);
 	    stmt.setString(31, id);
 	    stmt.executeUpdate();
+	    if(deadlineDate.isEmpty()){
+		qq = qq2;
+		stmt2 = con.prepareStatement(qq);
+		stmt2.setString(1, id);
+		stmt2.executeUpdate();
+		doSelect();
+	    }
 	}
 	catch(Exception ex){
 	    logger.error(ex+":"+qq);
 	    back =  ex.toString()+":"+qq;
 	}
 	finally{
-	    Helper.databaseDisconnect(con, stmt, rs);
+	    Helper.databaseDisconnect(con, rs, stmt, stmt2);
 	}
 	return back; // success
     }

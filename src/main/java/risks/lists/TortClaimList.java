@@ -553,6 +553,115 @@ public class TortClaimList{
 	}
 	return "";
     }
+    /**
+       select c.id,datediff(curdate(), c.received) from tortClaims c where datediff(curdate(), c.received) in (10,18,21,28) and c.status = 'Open' and c.closed is null and c.recordOnly is null ;
+     */
+    /**
+     * we want all records that has 75 or 30 day of the received date
+     */
+    public String findForNotification(){
+
+	Connection con = null;
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	String back = "";
+	String qf = " from tortClaims c ";
+	String qq = "select c.id,"+
+	    "c.type,c.status,"+
+	    "c.deductible,"+
+	    "c.paidByCity,c.paidByInsur,"+
+	    "c.requestAmount,"+ //
+	    "c.settled,"+						
+	    "c.miscByCity,"+ //						
+	    "c.cityAutoInc,"+
+	    "date_format(c.incidentDate,'%m/%d/%Y'),"+
+						
+	    "c.incident, "+
+	    "c.comments,"+
+	    "date_format(c.opened,'%m/%d/%Y'), "+   
+	    "date_format(c.received,'%m/%d/%Y'), "+
+	    "date_format(c.closed,'%m/%d/%Y'), "+
+	    "c.filed, "+
+	    "c.subInsur, "+
+	    "date_format(c.expires,'%m/%d/%Y'), "+
+	    "c.cityTotalCost,c.paidByCity2City,c.paidByInsur2City,"+
+	    "c.deductible2, "+
+	    "c.otherType,c.recordOnly,"+
+	    "c.paidByRisk,c.law_firm_id, "+
+	    "date_format(c.denialLetterDate,'%m/%d/%Y'), "+
+	    "date_format(c.deadlineDate,'%m/%d/%Y'), "+
+	    "c.lawsuit,c.bodilyInvolved ";
+	String qw = "datediff(CURDATE(), c.received) in (30,75) and c.status = 'Open' and c.closed is null and c.recordOnly is null ";
+	String str="";
+	qq = qq + qf;
+	if(!qw.equals("")){
+	    qq += " where "+qw;
+	}
+	if(!orderBy.equals("")){
+	    qq += " order by "+orderBy;
+	}
+	if(debug){
+	    logger.debug(qq);
+	}
+	con = Helper.getConnection();
+	if(con == null){
+	    back = "Could not connect to DB ";
+	    logger.debug(back);
+	    return back;
+	}
+	try{    
+	    stmt = con.prepareStatement(qq);
+	    rs = stmt.executeQuery();
+	    while(rs.next()){
+		TortClaim one =
+		    new TortClaim(debug,
+				  rs.getString(1),
+				  rs.getString(2),
+				  rs.getString(3),
+				  rs.getString(4),
+				  rs.getString(5),
+				  rs.getString(6),
+				  rs.getString(7),
+				  rs.getString(8),
+				  rs.getString(9),
+				  rs.getString(10),
+				  rs.getString(11),
+				  rs.getString(12),
+				  rs.getString(13),
+				  rs.getString(14),
+				  rs.getString(15),
+				  rs.getString(16),
+				  rs.getString(17),
+				  rs.getString(18),
+				  rs.getString(19),
+				  rs.getString(20),
+				  rs.getString(21),
+				  rs.getString(22),
+				  rs.getString(23),
+				  rs.getString(24),
+				  rs.getString(25),
+				  rs.getString(26),
+				  rs.getString(27),
+				  rs.getString(28),
+				  rs.getString(29),
+				  rs.getString(30) != null,
+				  rs.getString(31) != null);
+				  
+		if(torts == null)
+		    torts =new ArrayList<>();
+		if(!torts.contains(one))
+		    torts.add(one);
+	    }
+	}
+	catch(Exception ex){
+	    logger.error(ex+":"+qq);
+	    return ex.toString();
+	}
+	finally{
+	    Helper.databaseDisconnect(con, stmt, rs);
+	}
+	return "";
+    }
 
 }
 

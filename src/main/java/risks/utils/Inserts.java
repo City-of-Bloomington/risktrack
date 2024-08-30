@@ -2,6 +2,7 @@ package risks.utils;
 import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import risks.models.*;
 /**
  * 
  */
@@ -162,6 +163,9 @@ public class Inserts{
     // sidebar
     //
     public final static String sideBar(String url){
+	return sideBar(url, null);
+    }
+    public final static String sideBar(String url, User user){
 
 	String ret = "<div id='leftSidebar' class='left sidebar'>"+
 	    "<h3 class=\"titleBar\">New Action</h3>\n"+
@@ -192,8 +196,15 @@ public class Inserts{
 	    "<h3 class=\"titleBar\">Reports</h3>\n"+
 	    "<ul>\n"+
 	    "<li><a href=\""+url+"Report\">Reports</a></li>\n"+
-	    "<li><a href=\""+url+"TortReport\">Tort Report</a></li>\n"+	    
-	    "</ul></div>";
+	    "<li><a href=\""+url+"TortReport\">Tort Report</a></li>\n"+
+	    "</ul>";
+	if(user != null && user.isAdmin()){
+	   ret += "<h3 class=\"titleBar\">Misc</h3>\n"+
+	       "<ul>\n"+
+	       "<li><a href=\""+url+"Notification\">Notification Scheduler</a></li>\n"+
+	       "</ul>";	    
+	}
+	ret += "</div>";
 	return ret;
 
     }

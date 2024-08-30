@@ -46,7 +46,7 @@ public class Starter extends TopServlet{
 	out.println(Inserts.xhtmlHeaderInc);
 	out.println(Inserts.banner(url));
 	out.println(Inserts.menuBar(url,true));
-	out.println(Inserts.sideBar(url));
+	out.println(Inserts.sideBar(url, user));
 	//
 	out.println("<div id=\"mainContent\">");
 	out.println("<h2>RiskTrack Introduction</h2>");
