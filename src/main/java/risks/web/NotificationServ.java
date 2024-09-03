@@ -93,9 +93,6 @@ public class NotificationServ extends TopServlet{
 		success = false;
 	    }
 	}
-	else if(action.equals("Logs")){
-
-	}
 	out.println(Inserts.xhtmlHeaderInc);
 	out.println(Inserts.banner(url));
 	out.println(Inserts.menuBar(url, true));
@@ -144,9 +141,27 @@ public class NotificationServ extends TopServlet{
 	    out.println("</table>");
 	    out.println("</fieldset>");	    
 	}
-	else if(!action.isEmpty()){ // logs
-
-
+	if(true){
+	    NotificationLogList nll = new NotificationLogList(debug);
+	    String back = nll.find();
+	    if(back.isEmpty()){
+		List<NotificationLog> logs = nll.getLogs();
+		if(logs != null && logs.size() > 0){
+		    out.println("<fieldset><legend>Notification Logs</legend>");
+		    out.println("<table>");
+		    out.println("<tr><th>Date</th><th>Receiver</th><th>Message</th><th>Error Message</th></tr>");
+		    for(NotificationLog one:logs){
+			out.println("<tr>");
+			out.println("<td>"+one.getDate()+"</td></tr>");
+			out.println("<td>"+one.getReceiver()+"</td></tr>");		
+			out.println("<td>"+one.getMessage()+"</td></tr>");
+			out.println("<td>"+one.getErrorMsg()+"</td></tr>");
+			out.println("</tr>");
+		    }
+		    out.println("</table>");
+		    out.println("</fieldset>");	   		    
+		}
+	    }
 	}
 	out.print("</body></html>");
 	out.flush();

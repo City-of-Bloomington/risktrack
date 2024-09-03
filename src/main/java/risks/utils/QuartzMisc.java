@@ -43,6 +43,9 @@ public class QuartzMisc{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	String qq = " select from_unixtime(prev_fire_time/1000), from_unixtime(next_fire_time/1000) from qrtz_triggers where job_group like ? ";
+
+	// on production
+	String qq2 = " select from_unixtime(prev_fire_time/1000), from_unixtime(next_fire_time/1000) from QRTZ_TRIGGERS where job_group like ? ";	
 	try{
 	    con = Helper.getConnection();
 	    if(con == null){
@@ -80,6 +83,36 @@ public class QuartzMisc{
 	}catch(Exception ex){
 	    msg += ex;
 	    System.err.println(ex);
+	    //
+	    qq = qq2;
+	    try{
+		pstmt = con.prepareStatement(qq);
+		pstmt.setString(1,type+"%");
+		rs = pstmt.executeQuery();
+		if(rs.next()){
+		    String str = rs.getString(1);
+		    if(str != null){
+			if(str.length() > 16){
+			    prevScheduleDate = str.substring(0, 16);
+			}
+			else{
+			    prevScheduleDate = str;
+			}
+		    }
+		    str = rs.getString(2);
+		    if(str != null){
+			if(str.length() > 16){										
+			    nextScheduleDate = str.substring(0, 16);
+			}
+			else{
+			    nextScheduleDate = str;
+			}
+		    }
+		}
+	    }catch(Exception ex2){
+		msg += ex2;
+		System.err.println(ex2);	    
+	    }
 	}
 	finally{
 	    Helper.databaseDisconnect(con, pstmt, rs);

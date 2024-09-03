@@ -84,7 +84,8 @@ public class HandleNotification{
 	    return back;
 	}
 	if(activeMail){
-
+	    NotificationLog noteLog = new NotificationLog(debug);
+	    String note_msg = "The notification included the following claims: ";
 	    String subject = "RiskTrack 30 or 75 days claim notification ";
 	    String body_text ="This is an automated message from the RT app.\n";	    
 	    body_text += "RT app found the following clains has 30 or 75 days since the received date.\n\n";	    
@@ -96,8 +97,12 @@ public class HandleNotification{
 		if(!one.getIncident().isEmpty()){
 		    body_text += "Details: "+one.getIncident()+"\n";
 		}
-		body_text += " ----------- ";
+		body_text += " -----------\n\n ";
+		if(!note_msg.isEmpty()) note_msg += ", ";
+		note_msg += one.getId();
 	    }
+	    noteLog.setReceiver(receiver);
+	    noteLog.setMessage(note_msg);
 	    Properties props = new Properties();
 	    props.put("mail.smtp.host", mail_host);
 				
@@ -110,6 +115,7 @@ public class HandleNotification{
 		InternetAddress[] addrArray = InternetAddress.parse(receiver);
 		message.setRecipients(Message.RecipientType.TO, addrArray);
 		Transport.send(message);
+		
 	    }
 	    catch (MessagingException mex){
 		//
@@ -155,7 +161,9 @@ public class HandleNotification{
 		} while (ex != null);
 	    } catch (Exception ex){
 		logger.error(ex);
+		noteLog.setErrorMsg("Error "+ex);
 	    }
+	    noteLog.doSave();
 	}	    
 	return back;
     }
