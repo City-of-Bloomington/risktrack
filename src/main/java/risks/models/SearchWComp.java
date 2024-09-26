@@ -167,6 +167,7 @@ public class SearchWComp extends WorkComp{
 		    qw += whichDate+" >=  ? ";
 		}
 		if(!dateTo.equals("")){
+		    if(!qw.equals("")) qw += " and ";		    
 		    qw += whichDate+" <= ? ";
 		} 
 	    }
