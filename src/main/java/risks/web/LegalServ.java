@@ -77,7 +77,8 @@ public class LegalServ extends TopServlet{
 	    riskToInsurDate="",
 	    insurRecoveryDate="",
 	    insurCollectDate="", unableToCollect="",
-	    policy="", deductible="", otherDetails="";
+	    policy="", deductible="", otherDetails="",
+	    outOfDuty="";
 
 	boolean success = true;
        	String username = "", message = "",  pid="", // person id
@@ -179,6 +180,9 @@ public class LegalServ extends TopServlet{
 	    else if (name.equals("vin")) {
 		vin = value;
 	    }
+	    else if (name.equals("outOfDuty")) {
+		outOfDuty = value;
+	    }	    
 	    else if (name.equals("autoMake")) {
 		autoMake = value.toUpperCase();
 	    }
@@ -445,6 +449,7 @@ public class LegalServ extends TopServlet{
 	    lgl.setMiscByCity(miscByCity);
 	    lgl.setRecordOnly(recordOnly);
 	    lgl.setUnableToCollect(unableToCollect);
+	    lgl.setOutOfDuty(outOfDuty);
 	    String back = lgl.doSave();
 	    if(back.equals("")){
 		id = lgl.getId();
@@ -586,6 +591,7 @@ public class LegalServ extends TopServlet{
 	    lgl.setPaidByDef(paidByDef);
 	    lgl.setRecordOnly(recordOnly);
 	    lgl.setUnableToCollect(unableToCollect);
+	    lgl.setOutOfDuty(outOfDuty);
 	    String back = lgl.doUpdate();
 	    if(!back.equals("")){
 		message += back;
@@ -725,6 +731,7 @@ public class LegalServ extends TopServlet{
 		recordOnly = lgl.getRecordOnly();
 		paidByDef = lgl.getPaidByDef();
 		unableToCollect = lgl.getUnableToCollect();
+		outOfDuty = lgl.getOutOfDuty();
 		if(!(dept_id.equals("") || dept_id.equals("0"))){
 		    Department dp = new Department(debug, dept_id);
 		    back = dp.doSelect();
@@ -756,6 +763,7 @@ public class LegalServ extends TopServlet{
 	if(!riskToInsur.equals("")) riskToInsur = "checked=\"checked\"";
 	if(!recordOnly.equals("")) recordOnly = "checked=\"checked\"";
 	if(!unableToCollect.equals("")) unableToCollect="checked=\"checked\"";
+	if(!outOfDuty.equals("")) outOfDuty = "checked=\"checked\"";
 	//
 	// Inserts
 	out.println(Inserts.xhtmlHeaderInc);
@@ -875,12 +883,18 @@ public class LegalServ extends TopServlet{
 		    "type=\"checkbox\" "+unableToCollect+"/> ");
 	out.println("<label for=\"unableToCollect\">Unable to Collect"+
 		    " </label>");
-	out.println("</td></tr>");		
+	out.println("</td></tr>");
+	out.println("<tr><td>");
+	out.println("<input name=\"outOfDuty\" id=\"outofduty\" "+
+		    "value=\"y\" "+
+		    "type=\"checkbox\" "+outOfDuty+" /><label>Accident out off duty time</label>");
+	out.println("</td></tr>");	
 	out.println("<tr><td>");
 	out.println("<input name=\"recordOnly\" id=\"recordOnly\" "+
 		    "value=\"y\" "+
 		    "type=\"checkbox\" "+recordOnly+" /><label> Record Only</label>");
 	out.println("</td></tr>");
+	
 	out.println("<tr><td>");
 	out.println("<label for=\"closed\">Date Closed: "+
 		    " </label><input name=\"closed\" id=\"closed\" "+

@@ -1,4 +1,4 @@
-package risks.models;
+package risks.lists;
 
 import java.util.*;
 import java.sql.*;
@@ -8,25 +8,36 @@ import java.text.SimpleDateFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import risks.utils.Helper;
+import risks.models.*;
 
-public class SearchSafety extends Safety{
 
-    static Logger logger = LogManager.getLogger(SearchSafety.class);
-    String dateFrom="", dateTo="";
+public class SafetyList extends Safety{
+
+    static Logger logger = LogManager.getLogger(SafetyList.class);
+    SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");	
+    static boolean debug = false;
+    String dateFrom="", dateTo="", id="";
     String whichDate="";
     String amountFrom="", amountTo="";
     String whichAmount="", orderBy="r.id desc";
     String anyEstPlace="";
+    String onOffDuty = "";
     List<Safety> safetyList = null;
     Auto auto = null;
     //
     // basic constructor
-    public SearchSafety(boolean deb){
+    public SafetyList(boolean deb){
 	super(deb);
+	debug = deb;
     }
     //
     // setters
     //
+    @Override
+    public void setId(String val){
+	if(val != null)
+	    id = val;
+    }        
     public void setDateFrom(String val){
 	dateFrom = val;
     }
@@ -54,6 +65,10 @@ public class SearchSafety extends Safety{
     public void setAuto(Auto val){
 	auto = val;
     }
+    public void setOnOffDuty(String val){
+	if(val != null)
+	    onOffDuty = val;
+    }        
     //
     public List<Safety> getSafetyList(){
 	return safetyList;
@@ -97,7 +112,7 @@ public class SearchSafety extends Safety{
 	    "r.deductible,"+
 	    "r.otherType, "+
 	    "r.paidByCity,r.paidByInsur,r.miscByCity, "+
-	    "r.recordOnly,r.paidByRisk ";
+	    "r.recordOnly,r.paidByRisk,r.outOfDuty ";
 	String qf = " from riskSafety r ";
 	String qw = "";
 	String str="", back="";
@@ -207,6 +222,16 @@ public class SearchSafety extends Safety{
 		if(!qw.equals("")) qw += " and ";
 		qw += " (e.dept_id = ? or dr.dept_id = ? ) ";			
 	    }
+	    if(!onOffDuty.isEmpty()){
+		if(!qw.equals(""))
+		    qw += " and ";
+		if(onOffDuty.startsWith("on")){
+		    qw += "r.outOfDuty is null";
+		}
+		else{
+		    qw += "r.outOfDuty is not null ";
+		}
+	    }	    
 	    if(empFlag){
 		qf += " left join empRelated er on er.risk_id=r.id join employees e on e.id = er.employee_id left join deptRelated dr on dr.related_id=r.id ";
 	    }	
@@ -517,7 +542,8 @@ public class SearchSafety extends Safety{
 					rs.getString(37),
 					rs.getString(38),
 					rs.getString(39),
-					rs.getString(40));
+					rs.getString(40),
+					rs.getString(41));
 		if(!safetyList.contains(one))
 		    safetyList.add(one);
 	    }

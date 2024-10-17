@@ -27,7 +27,7 @@ public class MiscAccident extends Risk{
 
     String otherType="";
     String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="";
-    String errors = "";
+    String errors = "", outOfDuty="";
 	
     Estimate[] autoEstimates = null;
     Estimate[] propEstimates = null;
@@ -81,13 +81,14 @@ public class MiscAccident extends Risk{
 			String val25,
 											
 			String val26,
-			String val27){
+			String val27,
+			String val28){
 	setVals(val, val2, val3, val4, val5,
 		val6, val7, val8, val9, val10,
 		val11, val12, val13, val14, val15,
 		val16, val17, val18, val19, val20,
 		val21, val22, val23, val24, val25,
-		val26, val27);
+		val26, val27, val28);
     }
     void setVals(
 		 String val,
@@ -121,7 +122,8 @@ public class MiscAccident extends Risk{
 		 String val25,
 
 		 String val26,
-		 String val27
+		 String val27,
+		 String val28
 		 ){
 	setId(val);
 	setType(val2);
@@ -155,6 +157,7 @@ public class MiscAccident extends Risk{
 
 	setPaidByRisk(val26);
 	setDeptContact(val27);
+	setOutOfDuty(val28);
     }		
 		
     //
@@ -203,6 +206,10 @@ public class MiscAccident extends Risk{
 	if(val != null)
 	    reported = val;
     }
+    public void setOutOfDuty(String val){
+	if(val != null)
+	    outOfDuty = val;
+    }    
     public void setAccidLocation(String val){
 	if(val != null)
 	    accidLocation = val;
@@ -385,6 +392,9 @@ public class MiscAccident extends Risk{
     public String getDamage(){
 	return damage;
     }
+    public String getOutOfDuty(){
+	return outOfDuty;
+    }    
     public String getAutoDamage(){
 	return autoDamage;
     }
@@ -427,19 +437,19 @@ public class MiscAccident extends Risk{
     public String getErrors(){
 	return errors;
     }
-    public     boolean hasErrors(){
+    public boolean hasErrors(){
 	return !errors.equals("");
     }
-    public     Department  getDepartment(){
+    public Department  getDepartment(){
 	return department;
     }
-    public     List  getEmployees(){
+    public List  getEmployees(){
 	return employees;
     }
-    public     List<Auto>  getVehicles(){
+    public List<Auto>  getVehicles(){
 	return vehicles;
     }
-    public     Estimate[] getAutoEstimates(){
+    public Estimate[] getAutoEstimates(){
 	if(autoEstimates == null){
 	    autoEstimates = new Estimate[3];
 	}
@@ -450,7 +460,7 @@ public class MiscAccident extends Risk{
 	}
 	return autoEstimates;
     }
-    public     Estimate[] getPropEstimates(){
+    public Estimate[] getPropEstimates(){
 	if(propEstimates == null){
 	    propEstimates = new Estimate[3];
 	}
@@ -461,10 +471,10 @@ public class MiscAccident extends Risk{
 	}
 	return propEstimates;
     }
-    public     Insurance getInsurance(){
+    public Insurance getInsurance(){
 	return insurance;
     }
-    public     List<Note> getNotes(){
+    public List<Note> getNotes(){
 	if(notes == null && !id.equals("")){
 	    NoteList sp = new NoteList(debug, id);
 	    String back = sp.find();
@@ -477,10 +487,24 @@ public class MiscAccident extends Risk{
 	}
 	return notes;
     }
-    public     boolean hasNotes(){
+    public boolean hasNotes(){
 	getNotes();
 	return notes != null && notes.size() > 0;
-    }				
+    }
+    public  boolean isOffDuty(){
+	return !outOfDuty.isEmpty();
+    }    
+    public String getEmployeeNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getFullName();
+	    }
+	}
+	return names;
+    }    
     public String toString(){
 	return id;
     }
@@ -507,7 +531,7 @@ public class MiscAccident extends Risk{
     // save a new record in the database
     // return "" or any exception thrown by DB
     //
-    public     String doSave(){
+    public String doSave(){
 
 	String msg = "", back="", qq = "";
 	Connection con = null;
@@ -560,7 +584,7 @@ public class MiscAccident extends Risk{
 		"?,?,?,?,?,"+
 		"?,?,?,?,?,"+
 		"?,?,?,?,?,"+
-		"?,?)";
+		"?,?,?)";
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -760,6 +784,12 @@ public class MiscAccident extends Risk{
 	    else {
 		pstmt.setString(jj++, deptContact);
 	    }
+	    if(outOfDuty.equals("")){
+		pstmt.setNull(jj++,Types.CHAR);
+	    }
+	    else {
+		pstmt.setString(jj++, "y");								
+	    }	    
 	    if(!saveAction){ // update
 		pstmt.setString(jj++, id);
 	    }
@@ -785,7 +815,7 @@ public class MiscAccident extends Risk{
 	    "autoDamage=?,autoPaid=?,totalCostP=?,propDamage=?,"+
 	    "propPaid=?,subToInsur=?,workComp=?,whatProp=?,repairInfo=?,"+
 	    "otherType=?,paidByCity=?,paidByInsur=?,miscByCity=?,paidByRisk=?,"+
-	    "deptContact=? where id=? ";
+	    "deptContact=?,outOfDuty=? where id=? ";
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -863,7 +893,7 @@ public class MiscAccident extends Risk{
 	return msg;
     }
     //
-    public     String doDelete(){
+    public String doDelete(){
 	//
 	// System.err.println("delete record");
 	//
@@ -918,7 +948,7 @@ public class MiscAccident extends Risk{
 	return back;
     }
     //
-    public     String doSelect(){
+    public String doSelect(){
 	//
 	Connection con = null;
 	PreparedStatement pstmt = null;	
@@ -951,7 +981,8 @@ public class MiscAccident extends Risk{
 	    " paidByCity,paidByInsur,miscByCity, "+
 						
 	    " paidByRisk, "+
-	    " deptContact "+
+	    " deptContact, "+
+	    " outOfDuty "+
 	    " from misc_accidents where id=?";
 	String str="";
 	try{
@@ -995,7 +1026,8 @@ public class MiscAccident extends Risk{
 			rs.getString(24),
 			rs.getString(25),
 			rs.getString(26),
-			rs.getString(27));
+			rs.getString(27),
+			rs.getString(28));
 		back = doRefresh();
 		if(!back.equals("")){
 		    msg += back;
@@ -1011,7 +1043,7 @@ public class MiscAccident extends Risk{
 	}
 	return msg;
     }
-    public     String doRefresh(){
+    public String doRefresh(){
 		
 	String msg="", back="";
 	EstimateList el = new EstimateList(debug);

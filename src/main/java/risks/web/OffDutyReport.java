@@ -14,12 +14,11 @@ import risks.models.*;
 import risks.lists.*;
 import risks.utils.*;
 
-@WebServlet(urlPatterns = {"/TortReport"})
-public class TortReport extends TopServlet{
+@WebServlet(urlPatterns = {"/OffDutyReport"})
+public class OffDutyReport extends TopServlet{
 
     //
-    static Logger logger = LogManager.getLogger(TortReport.class);
-    static NumberFormat format = NumberFormat.getCurrencyInstance();
+    static Logger logger = LogManager.getLogger(OffDutyReport.class);
     /**
      * Generates the request form.
      * @param req
@@ -71,7 +70,7 @@ public class TortReport extends TopServlet{
 	out.println(Inserts.sideBar(url));
 	//
 	out.println("<div id=\"mainContent\">");
-	out.println("<h3 class=\"titleBar\">Tort Report</h3>");
+	out.println("<h3 class=\"titleBar\">Off Duty Report</h3>");
 	if(!success){
 	    if(!message.equals(""))
 		out.println("<font color='red'>"+message+"</font><br>");
@@ -135,7 +134,16 @@ public class TortReport extends TopServlet{
 	out.println("<input type=\"radio\" name=\"status\" "+
 		    "value=\"Closed\" /> Closed");
 	
-	out.println("</td></tr>");	
+	out.println("</td></tr>");
+	out.println("<tr><th>On/Off Duty</th>");	
+	out.println("<td><input type=\"radio\" "+
+		    "name=\"onOffDuty\" value=\"\" checked=\"checked\" /> All ");
+	out.println("<input type=\"radio\" name=\"onOffDuty\" "+
+		    "value=\"off\" />Off Duty Only");
+	out.println("<input type=\"radio\" name=\"onOffDuty\" "+
+		    "value=\"on\" />On Duty Only");
+	out.println("</td></tr>");
+	
 	out.println("<tr><th>Output Format</th>");
 	out.println("<td><input type=\"radio\" "+
 		    "name=\"output\" value=\"html\" checked=\"checked\" /> HTML ");
@@ -171,7 +179,7 @@ public class TortReport extends TopServlet{
 	String name, value;
 	String message="";
 	String action="";
-	String req_to="", req_from="", status="", dept_id="";
+	String req_to="", req_from="", status="", dept_id="", onOffDuty="";
 	String output="html";
 	Enumeration values = req.getParameterNames();
 	String [] vals;
@@ -195,8 +203,11 @@ public class TortReport extends TopServlet{
 	    else if (name.equals("dept_id")){
 		dept_id = value;
 	    }
+	    else if (name.equals("onOffDuty")){
+		onOffDuty = value;
+	    }	    
 	}
-	TortClaimList tcl = new TortClaimList(debug);
+	OnOffList tcl = new OnOffList(debug);
 	if(!dept_id.isEmpty()){
 	    tcl.setDept_id(dept_id);
 	}
@@ -209,17 +220,17 @@ public class TortReport extends TopServlet{
 	if(!status.isEmpty()){
 	    tcl.setStatus(status);
 	}
-	tcl.setWhichDate("IncidentDate");
-	// tcl.setActiveOnly();
-	
-	List<TortClaim> torts = null;
-	String back = tcl.lookFor();
+	if(!onOffDuty.isEmpty()){
+	    tcl.setOnOffDuty(onOffDuty);
+	}
+	List<List<String>> lists = null;
+	String back = tcl.find();
 	if(!back.isEmpty()){
 	    message = "Error "+back;
 	}
 	else{
-	    torts = tcl.getTorts();
-	    if(torts == null || torts.size() < 1){
+	    lists = tcl.getLists();
+	    if(lists == null || lists.size() < 1){
 		message = "No Match found ";
 	    }
 	}
@@ -231,47 +242,28 @@ public class TortReport extends TopServlet{
 	    out.println(Inserts.sideBar(url));
 	    //
 	    out.println("<div id=\"mainContent\">");
-	    out.println("<h3 class=\"titleBar\">Tort Report</h3>");
+	    out.println("<h3 class=\"titleBar\">Off Duty Report</h3>");
 	    if(!message.isEmpty()){
 		out.println("<p>"+message+"</p>");
 		out.println("<br />");
 	    }
-	    else if(torts.size() > 0){
+	    else if(lists.size() > 0){
 		out.println("<table><tr>");
-		out.println("<th>Id</th>");
 		out.println("<th>Type</th>");
+		out.println("<th>Id</th>");
 		out.println("<th>Status</th>");
-		out.println("<th>Claimant(s)</th>");		
 		out.println("<th>Incident Date</th>");
-		out.println("<th>Received</th>");
-		out.println("<th>Closed</th>");
-		out.println("<th>Deadline</th>");
-		out.println("<th>Denial Letter Date</th>");
-		out.println("<th>Lawsuit</th>");
-		out.println("<th>Bodily Involved</th>");
+		out.println("<th>Off Duty?</th>");		
+		out.println("<th>Employee</th>");
 		out.println("</tr>");
-		for(TortClaim one:torts){
+		for(List<String> one:lists){
 		    out.println("<tr>");
-		    out.println("<td>"+one.getId()+"</td>");
-		    
-		    out.println("<td>"+one.getRiskType()+"</td>");
-		    out.println("<td>"+one.getStatus()+"</td>");
-		    out.println("<td>"+one.getClaimentNames()+"</td>");
-		    out.println("<td>"+one.getIncidentDate()+"</td>");
-		    out.println("<td>"+one.getReceived()+"</td>");
-		    out.println("<td>"+one.getClosed()+"</td>");
-		    out.println("<td>"+one.getDeadlineDate()+"</td>");
-		    out.println("<td>"+one.getDenialLetterDate()+"</td>");
-		    String str = "No";
-		    if(one.getLawsuit()){
-			str = "Yes";
-		    }
-		    out.println("<td>"+str+"</td>");
-		    str = "No";
-		    if(one.getBodilyInvolved()){
-			str = "Yes";
-		    }
-		    out.println("<td>"+str+"</td>");
+		    out.println("<td>"+one.get(0)+"</td>");
+		    out.println("<td>"+one.get(1)+"</td>");
+		    out.println("<td>"+one.get(2)+"</td>");
+		    out.println("<td>"+one.get(3)+"</td>");
+		    out.println("<td>"+one.get(4)+"</td>");
+		    out.println("<td>"+one.get(5)+"</td>");
 		    out.println("</tr>");
 		}
 		out.println("<table>");
@@ -284,40 +276,22 @@ public class TortReport extends TopServlet{
 	    res.setHeader("Expires", "0");
 	    res.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 	    res.setHeader("Pragma", "public");
-	    res.setHeader("Content-Disposition","inline; filename=tort_claims.csv");
+	    res.setHeader("Content-Disposition","inline; filename=off_duty.csv");
 	    res.setContentType("application/csv");
 	    PrintWriter out = res.getWriter();
+	    out.print("\"Type\",");	    
 	    out.print("\"Id\",");
-	    out.print("\"Type\",");
 	    out.print("\"Status\",");
-	    out.print("\"Claimant(s)\",");		
 	    out.print("\"Incident Date\",");
-	    out.print("\"Received\",");
-	    out.print("\"Closed\",");
-	    out.print("\"Deadline\",");
-	    out.print("\"Denial Letter Date\",");
-	    out.print("\"Lawsuit\",");
-	    out.print("\"Bodily Involved\"\n");	    
-	    for(TortClaim one:torts){
- 		out.print("\""+one.getId()+"\",");
-		out.print("\""+one.getRiskType()+"\",");
-		out.print("\""+one.getStatus()+"\",");
-		out.print("\""+one.getClaimentNames()+"\",");
-		out.print("\""+one.getIncidentDate()+"\",");
-		out.print("\""+one.getReceived()+"\",");
-		out.print("\""+one.getClosed()+"\",");
-		out.print("\""+one.getDeadlineDate()+"\",");
-		out.print("\""+one.getDenialLetterDate()+"\",");
-		String str = "No";
-		if(one.getLawsuit()){
-		    str = "Yes";
-		}
-		out.print("\""+str+"\",");
-		str = "No";
-		if(one.getBodilyInvolved()){
-		    str = "Yes";
-		}
-		out.print("\""+str+"\"\n");
+	    out.print("\"Off Duty\",");	    	    
+	    out.print("\"Employee\"\n");
+	    for(List<String> one:lists){
+ 		out.print("\""+one.get(0)+"\",");
+		out.print("\""+one.get(1)+"\",");
+		out.print("\""+one.get(2)+"\",");
+		out.print("\""+one.get(3)+"\",");
+		out.print("\""+one.get(4)+"\",");
+		out.print("\""+one.get(5)+"\"\n");		
 	    }
 	    out.close();
 	}

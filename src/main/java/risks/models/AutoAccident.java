@@ -29,7 +29,7 @@ public class AutoAccident extends Risk{
 	totalCostP="", 
 	subToInsur="", autoPaid="", propPaid="", 
 	workComp="", whatProp="", repairInfo="";
-
+    String outOfDuty=""; //checkbox
     String otherType="";
     String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="";
     String errors = "";
@@ -87,13 +87,14 @@ public class AutoAccident extends Risk{
 			String val25,
 											
 			String val26,
-			String val27){
+			String val27,
+			String val28){
 	setVals(val, val2, val3, val4, val5,
 		val6, val7, val8, val9, val10,
 		val11, val12, val13, val14, val15,
 		val16, val17, val18, val19, val20,
 		val21, val22, val23, val24, val25,
-		val26, val27);
+		val26, val27, val28);
     }
     void setVals(
 		 String val,
@@ -127,7 +128,8 @@ public class AutoAccident extends Risk{
 		 String val25,
 
 		 String val26,
-		 String val27
+		 String val27,
+		 String val28
 		 ){
 	setId(val);
 	setType(val2);
@@ -161,6 +163,7 @@ public class AutoAccident extends Risk{
 
 	setPaidByRisk(val26);
 	setDeptContact(val27);
+	setOutOfDuty(val28);
     }		
 		
     //
@@ -174,139 +177,143 @@ public class AutoAccident extends Risk{
 	if(val != null)
 	    deptPhone = val;
     }
-    public    void setOtherType(String val){
+    public void setOtherType(String val){
 	if(val != null)
 	    otherType = val;
     }
-    public    void setStatus(String val){
+    public void setStatus(String val){
 	if(val != null)
 	    status = val;
     }
-    public    void setDept_id(String val){
+    public void setDept_id(String val){
 	if(val != null)
 	    dept_id = val;
     }
-    public    void setDeptContact(String val){
+    public void setOutOfDuty(String val){
+	if(val != null)
+	    outOfDuty = val;
+    }    
+    public void setDeptContact(String val){
 	if(val != null)
 	    deptContact = val;
     }
-    public    void setEmpInjured(String val){
+    public void setEmpInjured(String val){
 	if(val != null)
 	    empInjured = val;
     }
-    public    void setDebug(boolean val){
+    public void setDebug(boolean val){
 	debug = val;
     }
-    public    void setAccidDate(String val){
+    public void setAccidDate(String val){
 	if(val != null)
 	    accidDate = val;
     }
     
-    public    void setAccidTime(String val){
+    public void setAccidTime(String val){
 	if(val != null)
 	    accidTime = val;
     }
- public     void setReported(String val){
+    public void setReported(String val){
 	if(val != null)
 	    reported = val;
     }
-public      void setAccidLocation(String val){
+    public void setAccidLocation(String val){
 	if(val != null)
 	    accidLocation = val;
     }
-public      void setDamage(String val){
+    public void setDamage(String val){
 	if(val != null)
 	    damage = val;
     }
-public      void setAutoDamage(String val){
+    public void setAutoDamage(String val){
 	if(val != null)
 	    autoDamage = val;
     }
-public      void setPropDamage(String val){
+    public void setPropDamage(String val){
 	if(val != null)
 	    propDamage = val;
     }
-public      void setPaidByCity(String val){
+    public void setPaidByCity(String val){
 	if(val != null)
 	    paidByCity = Helper.cleanNumber(val);
     }
-public      void setPaidByInsur(String val){
+    public void setPaidByInsur(String val){
 	if(val != null)
 	    paidByInsur = Helper.cleanNumber(val);
     }
     
-public      void setMiscByCity(String val){
+    public void setMiscByCity(String val){
 	if(val != null)
 	    miscByCity = Helper.cleanNumber(val);
     }
-public      void setTotalCost(String val){
+    public void setTotalCost(String val){
 	if(val != null)
 	    totalCost = Helper.cleanNumber(val);
     }
-public      void setTotalCostP(String val){
+    public void setTotalCostP(String val){
 	if(val != null)
 	    totalCostP = Helper.cleanNumber(val);
     }
-public      void setSubToInsur(String val){
+    public void setSubToInsur(String val){
 	if(val != null)
 	    subToInsur = val;
     }
-public      void setAutoPaid(String val){
+    public void setAutoPaid(String val){
 	if(val != null)
 	    autoPaid = val;
     }
-public      void setPropPaid(String val){
+    public void setPropPaid(String val){
 	if(val != null)
 	    propPaid = val;
     }
-public      void setWorkComp(String val){
+    public void setWorkComp(String val){
 	if(val != null)
 	    workComp = val;
     }
-public      void setWhatProp(String val){
+    public void setWhatProp(String val){
 	if(val != null)
 	    whatProp = val;
     }
-public      void setRepairInfo(String val){
+    public void setRepairInfo(String val){
 	if(val != null)
 	    repairInfo = val;
     }
-public      void setPaidByRisk(String val){
+    public void setPaidByRisk(String val){
 	if(val != null)
 	    paidByRisk = val;
     }
-public      void setInsurance(Insurance val){
+    public void setInsurance(Insurance val){
 	if(val != null)
 	    insurance = val;
     }
-public      void setVehilces(List<Auto> val){
+    public void setVehilces(List<Auto> val){
 	if(val != null)
 	    vehicles = val;
     }
-public      void add(Auto val){
+    public void add(Auto val){
 	if(vehicles == null)
 	    vehicles = new ArrayList<Auto>();
 	vehicles.add(val);
     }
-public      void setEmployee(Employee val){
+    public void setEmployee(Employee val){
 	if(val != null && !val.isEmpty()){
 	    employee = val;
 	}
     }
-public      void setDepartment(Department val){
+    public void setDepartment(Department val){
 	if(val != null && !val.isEmpty()){
 	    department = val;
 	    dept_id = department.getId();
 	}
     }
-public      void addEmployee(Employee val){
+    public void addEmployee(Employee val){
 	if(employees == null)
 	    employees = new ArrayList();
 	if(val != null && !val.isEmpty()){
 	    employees.add(val);
 	}
     }
-    public      void removeEmployee(Employee val){
+    public void removeEmployee(Employee val){
 	if(val != null){
 	    if(employees != null && employees.size() > 0){
 		for(int i=0;i<employees.size();i++){
@@ -341,7 +348,7 @@ public      void addEmployee(Employee val){
     }
     public List<RiskPerson> getClaimants(){
 	if(claimants == null && !id.equals("")){
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    sp.setRisk_id(id);
 	    sp.setClaimAutoOnly();
 	    String back = sp.lookFor();
@@ -451,6 +458,9 @@ public      void addEmployee(Employee val){
     public String getMiscByCity(){
 	return miscByCity;
     }
+    public String getOutOfDuty(){
+	return outOfDuty;
+    }    
     public String getErrors(){
 	return errors;
     }
@@ -460,7 +470,7 @@ public      void addEmployee(Employee val){
     public  Department  getDepartment(){
 	return department;
     }
-    public   List  getEmployees(){
+    public   List<Employee>  getEmployees(){
 	return employees;
     }
     public List<Auto>  getVehicles(){
@@ -507,7 +517,10 @@ public      void addEmployee(Employee val){
     public  boolean hasNotes(){
 	getNotes();
 	return notes != null && notes.size() > 0;
-    }				
+    }
+    public  boolean isOffDuty(){
+	return !outOfDuty.isEmpty();
+    }    
     public String toString(){
 	return id;
     }
@@ -529,7 +542,18 @@ public      void addEmployee(Employee val){
 	    }
 	}
 	return seed;
-    }				
+    }
+    public String getEmployeeNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getFullName();
+	    }
+	}
+	return names;
+    }
     //
     // save a new record in the database
     // return "" or any exception thrown by DB
@@ -586,7 +610,7 @@ public      void addEmployee(Employee val){
 		"?,?,?,?,?,"+
 		"?,?,?,?,?,"+
 		"?,?,?,?,?,"+
-		"?,?)";
+		"?,?,?)";
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -785,9 +809,16 @@ public      void addEmployee(Employee val){
 	    else {
 		pstmt.setString(jj++, deptContact);
 	    }
+	    if(outOfDuty.equals("")){
+		pstmt.setNull(jj++,Types.CHAR);
+	    }
+	    else {
+		pstmt.setString(jj++, "y");								
+	    }
 	    if(!saveAction){ // update
 		pstmt.setString(jj++, id);
 	    }
+	    
 	}
 	catch(Exception ex){
 	    logger.error(ex);
@@ -810,7 +841,7 @@ public      void addEmployee(Employee val){
 	    "autoDamage=?,autoPaid=?,totalCostP=?,propDamage=?,"+
 	    "propPaid=?,subToInsur=?,workComp=?,whatProp=?,repairInfo=?,"+
 	    "otherType=?,paidByCity=?,paidByInsur=?,miscByCity=?,paidByRisk=?,"+
-	    "deptContact=? where id=? ";
+	    "deptContact=?,outOfDuty=? where id=? ";
 	if(debug){
 	    logger.debug(qq);
 	}
@@ -976,7 +1007,8 @@ public      void addEmployee(Employee val){
 	    " paidByCity,paidByInsur,miscByCity, "+
 						
 	    " paidByRisk, "+
-	    " deptContact "+
+	    " deptContact, "+
+	    " outOfDuty "+
 	    " from auto_accidents where id=?";
 	String str="";
 	try{
@@ -1020,7 +1052,8 @@ public      void addEmployee(Employee val){
 			rs.getString(24),
 			rs.getString(25),
 			rs.getString(26),
-			rs.getString(27));
+			rs.getString(27),
+			rs.getString(28));
 		back = doRefresh();
 		if(!back.equals("")){
 		    msg += back;

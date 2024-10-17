@@ -1,4 +1,4 @@
-package risks.models;
+package risks.lists;
 
 import java.util.*;
 import java.sql.*;
@@ -8,14 +8,16 @@ import java.text.SimpleDateFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import risks.utils.Helper;
+import risks.models.*;
 
 
-public class SearchPerson extends RiskPerson{
+public class PersonList extends RiskPerson{
 
     // 
     // search related variables
     //
-    static Logger logger = LogManager.getLogger(SearchPerson.class);
+    static Logger logger = LogManager.getLogger(PersonList.class);
+    static boolean debug=false;
     SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");	
     String phone = "", updateFrom="", updateTo="", sortBy="";
     String risk_id="", name=""; // tort, vslegal, etc
@@ -30,9 +32,10 @@ public class SearchPerson extends RiskPerson{
     //
     // basic constructor
     //
-    public SearchPerson(boolean deb){
+    public PersonList(boolean deb){
 
 	super(deb);
+	debug = deb;
     }
     //
     //

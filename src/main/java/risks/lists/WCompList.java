@@ -1,33 +1,44 @@
-package risks.models;
+package risks.lists;
 
 import java.util.*;
 import java.sql.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import risks.utils.Helper;
+import risks.models.*;
 
-public class SearchWComp extends WorkComp{
+
+public class WCompList extends WorkComp{
 
     // 
     // search related variables
     //
-    static Logger logger = LogManager.getLogger(SearchWComp.class);	
+    static SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");	
+    static Logger logger = LogManager.getLogger(WCompList.class);
+    static boolean debug = false;
     String idArr[] = null; // needed for search purpose
-    String whichDate = "", dateFrom="", dateTo="";
+    String whichDate = "", dateFrom="", dateTo="", id="";
     String whichAmount = "", amntFrom="", amntTo="";
     List<WorkComp> comps = null;
     //
     // basic constructor
     //
-    public SearchWComp(boolean deb){
+    public WCompList(boolean deb){
 
 	super(deb);
+	debug = deb;
     }
     //
     //
     // these are needed for search purpose
     //
+    @Override
+    public void setId(String val){
+	if(val != null)
+	    id = val;
+    }        
     public void setWhichDate(String val){
 	whichDate = val;
     }    

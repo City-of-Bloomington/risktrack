@@ -11,7 +11,7 @@ import risks.utils.Helper;
 public class WorkComp extends Risk{
 
     static Logger logger = LogManager.getLogger(WorkComp.class);
-    String status="", vsId="",tortId="",
+    public String status="", vsId="",tortId="",
 	empid="",empName="",empPhone="",dept_id="", empTitle="",
 	accidentDate="",//  date
 	injuryType="",//  varchar(50),"+

@@ -442,16 +442,6 @@ public class Report extends TopServlet{
 	    String qw = "", str="",str2="", all="";
 	    double t1=0, t2=0, t3=0, t4=0, t5=0, t6=0,
 		d=0, d2=0, d3=0, d4=0, d5=0, d6=0;
-	    /**
-	       select count(*), v.status status, t.typeDesc  type,d.name dept
-	       from tortClaims v left join riskUnifiedTypes t on t.type=v.type
-	       left join empRelated er on er.risk_id=v.id
-	       left join employees e on er.employee_id=e.id
-	       left join deptRelated dr on dr.related_id=v.id
-	       left join departments d on d.id=dr.dept_id or d.id=e.dept_id
-       	       where str_to_date('01/01/2023','%m/%d/%Y') <= v.incidentDate
-	       group by status, type, dept
-	     */
 	    String qc = "select count(*), t.typeDesc type from tortClaims v left join riskUnifiedTypes t on t.type=v.type ";
 	    String qq = "", q = " select count(*),"+
 		"t.typeDesc type,"+

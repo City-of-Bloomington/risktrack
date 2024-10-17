@@ -28,7 +28,7 @@ public class MiscAccidentList{
 	empInjured="",
 	autoDamage="", propDamage="", // y/n
 	whichDate="",dateFrom="", dateTo="",
-	whichAmount="", amountFrom="", amountTo="";
+	whichAmount="", amountFrom="", amountTo="", onOffDuty="";
 	
     String empid="", empName="", // joins
 	empDept="", deptPhone="",
@@ -174,6 +174,10 @@ public class MiscAccidentList{
 	if(val != null)
 	    orderBy = val;
     }
+    public void setOnOffDuty(String val){
+	if(val != null)
+	    onOffDuty = val;
+    }            
     public List<MiscAccident> getMiscAccidents(){
 	return miscAccidents;
     }
@@ -213,7 +217,8 @@ public class MiscAccidentList{
 	    " d.paidByCity,d.paidByInsur,d.miscByCity, "+
 						
 	    " d.paidByRisk, "+
-	    " d.deptContact "+
+	    " d.deptContact, "+
+	    " d.outOfDuty "+
 	    " from misc_accidents d ";
 	String qw = "", msg="";
 	boolean empTbl = false, insurTbl = false, autoTbl = false;
@@ -295,6 +300,16 @@ public class MiscAccidentList{
 		    qw += " and ";
 		qw += " d.deptPhone like ? ";
 	    }
+	    if(!onOffDuty.isEmpty()){
+		if(!qw.equals(""))
+		    qw += " and ";
+		if(onOffDuty.startsWith("on")){
+		    qw += "d.outOfDuty is null";
+		}
+		else{
+		    qw += "d.outOfDuty is not null ";
+		}
+	    }	    
 	    if(!vin.equals("")){
 		autoTbl = true;
 		if(!qw.equals(""))
@@ -520,7 +535,8 @@ public class MiscAccidentList{
 				     rs.getString(24),
 				     rs.getString(25),
 				     rs.getString(26),
-				     rs.getString(27)
+				     rs.getString(27),
+				     rs.getString(28)
 				     );
 		miscAccidents.add(one);
 	    }

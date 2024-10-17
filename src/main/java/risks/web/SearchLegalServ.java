@@ -676,7 +676,7 @@ public class SearchLegalServ extends TopServlet{
 	out.println("<h1>Search  Recovery Actions</h1>");
 
 	boolean needJoin = false, match = true;
-	SearchLegal sc = new SearchLegal(debug);
+	LegalList sc = new LegalList(debug);
 	Auto auto = null;
 	List<Legal> legals = null;
 	if(match){

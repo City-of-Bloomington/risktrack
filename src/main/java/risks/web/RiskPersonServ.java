@@ -163,7 +163,7 @@ public class RiskPersonServ extends TopServlet{
 	}
 	if(action.equals("Save")){
 	    //
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    //
 	    // we use this info to find out if the person is already
 	    // in the system	    

@@ -329,7 +329,7 @@ public class InsertPersonServ extends TopServlet{
 
 	}				
 	if(action.equals("Search")){
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    if(!id.equals("")){
 		sp.setId(id);
 	    }

@@ -32,6 +32,7 @@ public class AutoAccidentList{
 	vin="", autoPlate="", autoNum="", autoMake="",autoModel="", autoYear="",
 	insurance="",adjuster="",adjusterPhone="",claimNum="",insurStatus="",
 	policy="";
+    String onOffDuty = ""; //all, onOnly, offOnly
     String orderBy="d.id desc";
 	
     String errors = "";
@@ -171,6 +172,10 @@ public class AutoAccidentList{
 	if(val != null)
 	    orderBy = val;
     }
+    public void setOnOffDuty(String val){
+	if(val != null)
+	    onOffDuty = val;
+    }    
     public List<AutoAccident> getAutoAccidents(){
 	return autoAccidents;
     }
@@ -210,7 +215,8 @@ public class AutoAccidentList{
 	    " d.paidByCity,d.paidByInsur,d.miscByCity, "+
 						
 	    " d.paidByRisk, "+
-	    " d.deptContact "+
+	    " d.deptContact, "+
+	    " d.outOfDuty "+
 	    " from auto_accidents d ";
 	String qw = "", msg="";
 	boolean empTbl = false, insurTbl = false, autoTbl = false;
@@ -363,6 +369,16 @@ public class AutoAccidentList{
 		if(!qw.equals(""))
 		    qw += " and ";
 		qw += " i.policy = ? ";
+	    }
+	    if(!onOffDuty.isEmpty()){
+		if(!qw.equals(""))
+		    qw += " and ";
+		if(onOffDuty.startsWith("on")){
+		    qw += "d.outOfDuty is null";
+		}
+		else{
+		    qw += "d.outOfDuty is not null ";
+		}
 	    }
 	}
 	if(empTbl){
@@ -517,7 +533,8 @@ public class AutoAccidentList{
 				     rs.getString(24),
 				     rs.getString(25),
 				     rs.getString(26),
-				     rs.getString(27)
+				     rs.getString(27),
+				     rs.getString(28)
 				     );
 		autoAccidents.add(one);
 	    }

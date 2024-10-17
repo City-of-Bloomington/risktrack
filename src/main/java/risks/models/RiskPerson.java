@@ -14,7 +14,7 @@ public class RiskPerson{
     boolean debug;
     static Logger logger = LogManager.getLogger(RiskPerson.class);
     SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");	
-    String fname = "", lname="",mi="",
+    public String fname = "", lname="",mi="",
 	streetNum="", streetDir="", id="", nameTitle="",
 	streetName="", streetType="", sudType="", sudNum="",
 	city="", state="", zip="", addrUpdate="", email="",

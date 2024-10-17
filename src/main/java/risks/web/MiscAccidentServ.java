@@ -64,7 +64,7 @@ public class MiscAccidentServ extends TopServlet{
 	String // newly added
 	    est_1="",est_2="",est_3="",totalCost="", totalCostP="",
 	    estp_1="",estp_2="",estp_3="",
-	    repairInfo="",
+	    repairInfo="", outOfDuty="",
 	    propDamage="",autoDamage="",workComp="",whatProp="", 
 	    tortId="", vsId="", recordOnly="";
 	
@@ -197,6 +197,9 @@ public class MiscAccidentServ extends TopServlet{
 	    else if (name.equals("propPaid")) {
 		ds.setPropPaid(value);
 	    }
+	    else if (name.equals("outOfDuty")) {
+		ds.setOutOfDuty(value);
+	    }	    
 	    else if (name.equals("vin")) {
 		newAuto.setVin(value);
 	    }
@@ -521,6 +524,7 @@ public class MiscAccidentServ extends TopServlet{
 	autoPaid = ds.getAutoPaid();
 	propPaid = ds.getPropPaid();
 	workComp = ds.getWorkComp();
+	outOfDuty = ds.getOutOfDuty();
 	if(action.equals("") && !prevAction.equals("")){
 	    ds.doRefresh();
 	}
@@ -550,7 +554,7 @@ public class MiscAccidentServ extends TopServlet{
 	if(!autoPaid.equals("")) autoPaid = "checked";
 	if(!propPaid.equals("")) propPaid = "checked";
 	if(!workComp.equals("")) workComp = "checked";
-
+	if(!outOfDuty.equals("")) outOfDuty = "checked";
 	if(!prevAction.equals("") && action.equals("")) 
 	    action = prevAction;
 	if(!prevAction.equals("")) action = prevAction;
@@ -803,6 +807,11 @@ public class MiscAccidentServ extends TopServlet{
 		    "id=\"empInjured\" value=\"y\" "+empInjured+" />");
 	out.println("<label for=\"empInjured\">Employee Injured?</label>");
 	out.println("</td></tr>");
+	out.println("<tr><td>");
+	out.println("<input type=\"checkbox\" name=\"outOfDuty\" "+
+		    "id=\"outofduty\" value=\"y\" "+outOfDuty+" />");
+	out.println("<label for=\"empInjured\">Accident out off duty time</label>");
+	out.println("</td></tr>");	
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"workComp\" "+
 		    "id=\"workComp\" value=\"y\" "+workComp+" />");

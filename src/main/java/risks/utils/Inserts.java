@@ -197,6 +197,7 @@ public class Inserts{
 	    "<ul>\n"+
 	    "<li><a href=\""+url+"Report\">Reports</a></li>\n"+
 	    "<li><a href=\""+url+"TortReport\">Tort Report</a></li>\n"+
+	    "<li><a href=\""+url+"OffDutyReport\">Off Duty Report</a></li>\n"+
 	    "</ul>";
 	if(user != null && user.isAdmin()){
 	   ret += "<h3 class=\"titleBar\">Misc</h3>\n"+

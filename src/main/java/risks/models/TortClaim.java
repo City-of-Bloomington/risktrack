@@ -507,7 +507,7 @@ public class TortClaim extends Risk{
     }
     public List<RiskPerson> getClaiments(){
 	if(claiments == null && !id.equals("")){
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    sp.setRisk_id(id);
 	    sp.setClaimPersonOnly();
 	    String back = sp.lookFor();
@@ -548,7 +548,7 @@ public class TortClaim extends Risk{
     }
     public List<RiskPerson> getWitnesses(){
 	if(witnesses == null && !id.equals("")){
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    sp.setRisk_id(id);
 	    sp.setWitnessPersonOnly();
 	    String back = sp.lookFor();

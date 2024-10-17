@@ -68,7 +68,7 @@ public class AutoAccidentServ extends TopServlet{
 	    repairInfo="",
 	    propDamage="",autoDamage="",workComp="",whatProp="", 
 	    tortId="", vsId="", recordOnly="";
-	
+	String outOfDuty="";
 	boolean connectDbOk = false, success = true;
        	String message = "", action = "",entry_time = "", 
 	    entry_date = "", prevAction="", relatedId="";
@@ -229,13 +229,16 @@ public class AutoAccidentServ extends TopServlet{
 	    else if (name.equals("damage")) {
 		ds.setDamage(value);
 	    }
+	    else if (name.equals("outOfDuty")) {
+		ds.setOutOfDuty(value);
+	    }	    
 	    else if (name.equals("clmntMark")){ // array
 		clmntList =vals;
-	    }						
+	    }
 	    else if (name.equals("est_arr")) {
 		try{
 		    int jj = Integer.parseInt(value);
-		    auto_est[jj].setChosen("y");					
+		    auto_est[jj].setChosen("y");
 		}catch(Exception ex){}
 	    }
 	    else if (name.equals("estp_arr")) {
@@ -534,6 +537,7 @@ public class AutoAccidentServ extends TopServlet{
 	autoPaid = ds.getAutoPaid();
 	propPaid = ds.getPropPaid();
 	workComp = ds.getWorkComp();
+	outOfDuty = ds.getOutOfDuty();
 	if(action.equals("") && !prevAction.equals("")){
 	    ds.doRefresh();
 	}
@@ -544,7 +548,7 @@ public class AutoAccidentServ extends TopServlet{
 	    auto_est = ds.getAutoEstimates();
 	    for(int i=0;i<auto_est.length;i++){
 		if(auto_est[i].isChosen()){
-		    est_arr[i]="checked";
+		    est_arr[i]="checked=\"checked\"";
 		}
 	    }
 	}
@@ -552,18 +556,18 @@ public class AutoAccidentServ extends TopServlet{
 	    prop_est = ds.getPropEstimates();
 	    for(int i=0;i<prop_est.length;i++){
 		if(prop_est[i].isChosen()){
-		    estp_arr[i]="checked";
+		    estp_arr[i]="checked=\"checked\"";
 		}
 	    }
 	}
-	if(!empInjured.equals("")) empInjured = "checked";
-	if(!autoDamage.equals("")) autoDamage = "checked";
-	if(!propDamage.equals("")) propDamage = "checked";
-	if(!subToInsur.equals("")) subToInsur = "checked";
-	if(!autoPaid.equals("")) autoPaid = "checked";
-	if(!propPaid.equals("")) propPaid = "checked";
-	if(!workComp.equals("")) workComp = "checked";
-
+	if(!empInjured.equals("")) empInjured = "checked=\"checked\"";
+	if(!autoDamage.equals("")) autoDamage = "checked=\"checked\"";
+	if(!propDamage.equals("")) propDamage = "checked=\"checked\"";
+	if(!subToInsur.equals("")) subToInsur = "checked=\"checked\"";
+	if(!autoPaid.equals("")) autoPaid = "checked=\"checked\"";
+	if(!propPaid.equals("")) propPaid = "checked=\"checked\"";
+	if(!workComp.equals("")) workComp = "checked=\"checked\"";
+	if(!outOfDuty.equals("")) outOfDuty = "checked=\"checked\"";
 	if(!prevAction.equals("") && action.equals("")) 
 	    action = prevAction;
 	if(!prevAction.equals("")) action = prevAction;
@@ -874,8 +878,13 @@ public class AutoAccidentServ extends TopServlet{
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"empInjured\" "+
 		    "id=\"empInjured\" value=\"y\" "+empInjured+" />");
-	out.println("<label for=\"empInjured\">Employee Injured?</label>");
+	out.println("<label for=\"empInjured\">Employee Injured</label>");
 	out.println("</td></tr>");
+	out.println("<tr><td>");
+	out.println("<input type=\"checkbox\" name=\"outOfDuty\" "+
+		    "id=\"outofduty\" value=\"y\" "+outOfDuty+" />");
+	out.println("<label for=\"outofduty\">Accident out off duty time</label>");
+	out.println("</td></tr>");	
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"workComp\" "+
 		    "id=\"workComp\" value=\"y\" "+workComp+" />");

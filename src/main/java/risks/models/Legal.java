@@ -12,7 +12,8 @@ import risks.lists.*;
 public class Legal extends Risk{
 
     static Logger logger = LogManager.getLogger(Legal.class);
-    String 
+   
+    public String 
 	type="", caseNum = "", status="", tortId="",
 	location="", damageAmnt="", description="", otherType="",
     //
@@ -35,7 +36,7 @@ public class Legal extends Risk{
 	defAdjuster="", defAdjusterPhone="", defAdjusterEmail="",
 	defAttorney="", defAttorneyPhone="";
     //
-    String  allDocuments="", deptRecoverDate="", deptCollectDate="",
+    public String  allDocuments="", deptRecoverDate="", deptCollectDate="",
 	deptToRisk="",  // ?
 	deptToRiskDate="",
 	riskFirstDate="",
@@ -47,8 +48,8 @@ public class Legal extends Risk{
 	insurRecoveryDate="",
 	insurCollectDate="",
 	deductible="", otherDetails="", recordOnly="", unableToCollect="";
-    String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="",
-	paidByDef="";
+    public String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="",
+	paidByDef="", outOfDuty="";
     List<Employee> workers  = null;
     List<Employee> employees = null;
     List<Insurance> insurances = null;
@@ -105,13 +106,14 @@ public class Legal extends Risk{
 		 String val34,
 		 String val35,
 		 String val36,
-		 String val37
+		 String val37,
+		 String val38
 		 ){
 	debug = deb;
 	setVals(val, val2, val3, val4, val5, val6, val7, val8,val9,val10,
 		val11, val12, val13, val14, val15, val16, val17, val18,val19,val20,
 		val21, val22, val23, val24, val25, val26, val27, val28,val29,val30,
-		val31, val32, val33, val34, val35, val36, val37);
+		val31, val32, val33, val34, val35, val36, val37, val38);
     }
     void setVals(
 		 String val,
@@ -150,7 +152,9 @@ public class Legal extends Risk{
 		 String val34,
 		 String val35,
 		 String val36,
-		 String val37){
+		 String val37,
+		 String val38
+		 ){
 	setId(val);
 	setType(val2);
 	setStatus(val3);
@@ -191,122 +195,126 @@ public class Legal extends Risk{
 	setPaidByRisk(val35);
 	setPaidByDef(val36);
 	setUnableToCollect(val37);
-				
+	setOutOfDuty(val38);
     }
     //
     // setters
     //
-    public     void setTortId(String val){
+    public void setTortId(String val){
 	if(val != null && !val.equals(""))
 	    tortId = val;
     }
-    public     void setCaseNum(String val){
+    public void setCaseNum(String val){
 	if(val != null && !val.equals(""))
 	    caseNum = val;
     }
-    public     void setType(String val){
+    public void setType(String val){
 	if(val != null && !val.equals(""))
 	    type = val;
     }
-    public     void setUnableToCollect(String val){
+    public void setUnableToCollect(String val){
 	if(val != null && !val.equals(""))
 	    unableToCollect = val;
     }
     public     String getUnableToCollect(){
 	return unableToCollect;
     }			
-    public     void setOtherType(String val){
+    public void setOtherType(String val){
 	if(val != null && !val.equals(""))
 	    otherType = val;
     }
-    public     void setStatus(String val){
+    public void setStatus(String val){
 	if(val != null)
 	    status = val;
     }
-    public     void setEmpName(String val){
+    public void setEmpName(String val){
 	if(val != null)
 	    empName = val;
     }
-    public     void setEmpPhone(String val){
+    public void setEmpPhone(String val){
 	if(val != null)
 	    empPhone = val;
     }
-    public     void setDept_id(String val){
+    public void setDept_id(String val){
 	if(val != null)
 	    dept_id = val;
     }
-    public     void setEmpid(String val){
+    public void setOutOfDuty(String val){
+	if(val != null)
+	    outOfDuty = val;
+    }    
+    public void setEmpid(String val){
 	if(val != null)
 	    empid = val;
     }
-    public     void setEmpTitle(String val){
+    public void setEmpTitle(String val){
 	if(val != null)
 	    empTitle = val;
     }
     //
-    public     void setCityAutoInc(String val){
+    public void setCityAutoInc(String val){
 	if(val != null)
 	    cityAutoInc = val;
     }
 
-    public     void setInsured(String val){
+    public void setInsured(String val){
 	if(val != null)
 	    insured = val;
     }
 
-    public     void setDebug(boolean val){
+    public void setDebug(boolean val){
 	debug = val;
     }
-    public     void setDoi(String val){
+    public void setDoi(String val){
 	if(val != null)
 	    doi = val;
     }	
-    public     void setFiled(String val){
+    public void setFiled(String val){
 	if(val != null)
 	    filed = val;
     }
-    public     void setJudgment(String val){
+    public void setJudgment(String val){
 	if(val != null)
 	    judgment = val;
     }
-    public     void setProSupp(String val){
+    public void setProSupp(String val){
 	if(val != null)
 	    proSupp = val;
     }
-    public     void setClosed(String val){
+    public void setClosed(String val){
 	if(val != null)
 	    closed = val;
     }
-    public     void setLocation(String val){
+    public void setLocation(String val){
 	if(val != null)
 	    location = val;
     }
-    public     void setDamageAmnt(String val){
+    public void setDamageAmnt(String val){
 	if(val != null)
 	    damageAmnt = Helper.cleanNumber(val);
     }
-    public     void setPaidByCity(String val){
+    public void setPaidByCity(String val){
 	if(val != null)
 	    paidByCity = Helper.cleanNumber(val);
     }
-    public     void setPaidByInsur(String val){
+    public void setPaidByInsur(String val){
 	if(val != null)
 	    paidByInsur = Helper.cleanNumber(val);
     }
-    public     void setMiscByCity(String val){
+    public void setMiscByCity(String val){
 	if(val != null)
 	    miscByCity = Helper.cleanNumber(val);
     }
 
-    public     void setDescription(String val){
+    public void setDescription(String val){
 	if(val != null)
 	    description = val;
     }	
-    public     void setAllDocuments(String val){
+    public void setAllDocuments(String val){
 	if(val != null)
 	    allDocuments = val;
     }	
-    public     void setDeptRecoverDate(String val){
+    public void setDeptRecoverDate(String val){
 	if(val != null)
 	    deptRecoverDate = val;
     }	
@@ -314,63 +322,63 @@ public class Legal extends Risk{
 	if(val != null)
 	    deptCollectDate = val;
     }	
-    public     void setDeptToRisk(String val){
+    public void setDeptToRisk(String val){
 	if(val != null)
 	    deptToRisk = val;
     }	
-    public     void setDeptToRiskDate(String val){
+    public void setDeptToRiskDate(String val){
 	if(val != null)
 	    deptToRiskDate = val;
     }
-    public     void setRiskFirstDate(String val){
+    public void setRiskFirstDate(String val){
 	if(val != null)
 	    riskFirstDate = val;
     }	
-    public     void setToProsecutorDate(String val){
+    public void setToProsecutorDate(String val){
 	if(val != null)
 	    toProsecutorDate = val;
     }
-    public     void setConvictionDate(String val){
+    public void setConvictionDate(String val){
 	if(val != null)
 	    convictionDate = val;
     }
-    public     void setCollectDate(String val){
+    public void setCollectDate(String val){
 	if(val != null)
 	    collectDate = val;
     }
-    public     void setRiskToInsur(String val){
+    public void setRiskToInsur(String val){
 	if(val != null)
 	    riskToInsur = val;
     }
-    public     void setRiskToInsurDate(String val){
+    public void setRiskToInsurDate(String val){
 	if(val != null)
 	    riskToInsurDate = val;
     }
-    public     void setInsurRecoveryDate(String val){
+    public void setInsurRecoveryDate(String val){
 	if(val != null)
 	    insurRecoveryDate = val;
     }
-    public     void setInsurCollectDate(String val){
+    public void setInsurCollectDate(String val){
 	if(val != null)
 	    insurCollectDate = val;
     }
-    public     void setDeductible(String val){
+    public void setDeductible(String val){
 	if(val != null)
 	    deductible = Helper.cleanNumber(val);
     }	
-    public     void setOtherDetails(String val){
+    public void setOtherDetails(String val){
 	if(val != null)
 	    otherDetails = val;
     }	
-    public     void setRecordOnly(String val){
+    public void setRecordOnly(String val){
 	if(val != null)
 	    recordOnly = val;
     }
-    public     void setPaidByRisk(String val){
+    public void setPaidByRisk(String val){
 	if(val != null)
 	    paidByRisk = Helper.cleanNumber(val);
     }
-    public     void setPaidByDef(String val){
+    public void setPaidByDef(String val){
 	if(val != null)
 	    paidByDef = Helper.cleanNumber(val);
     }
@@ -505,6 +513,9 @@ public class Legal extends Risk{
     public String getPaidByDef(){
 	return paidByDef;
     }
+    public String getOutOfDuty(){
+	return outOfDuty;
+    }
 
     public String toString(){
 	return id;
@@ -528,10 +539,10 @@ public class Legal extends Risk{
 	}
 	return seed;
     }		
-    public     List<Employee> getWorkers(){
+    public List<Employee> getWorkers(){
 	return workers;
     }
-    public     List<Employee>  getEmployees(){
+    public List<Employee>  getEmployees(){
 	if(employees == null){
 	    EmployeeList el = new EmployeeList(debug, id);
 	    String back = el.lookFor();
@@ -541,7 +552,7 @@ public class Legal extends Risk{
 	}
 	return employees;
     }
-    public     List<Insurance>  getInsurances(){
+    public List<Insurance>  getInsurances(){
 	if(insurances == null){
 	    InsuranceList il = new InsuranceList(debug, id);
 	    String back = il.lookFor();
@@ -551,7 +562,7 @@ public class Legal extends Risk{
 	}
 	return insurances;
     }
-    public     List<Auto>  getAutos(){
+    public List<Auto>  getAutos(){
 	if(autos == null){
 	    AutoList il = new AutoList(debug, id);
 	    String back = il.lookFor();
@@ -561,7 +572,7 @@ public class Legal extends Risk{
 	}
 	return autos;
     }
-    public     List<RelatedDept> getRelatedDepts(){
+    public List<RelatedDept> getRelatedDepts(){
 	if(relatedDepts == null && !id.equals("")){
 	    RelatedDeptList rdl = new RelatedDeptList(debug, id);
 	    rdl.setType("Legal");
@@ -575,9 +586,12 @@ public class Legal extends Risk{
 	}
 	return relatedDepts;
     }
-    public     List<RiskPerson> getDefendants(){
+    public  boolean isOffDuty(){
+	return !outOfDuty.isEmpty();
+    }        
+    public List<RiskPerson> getDefendants(){
 	if(defendants == null && !id.equals("")){
-	    SearchPerson sp = new SearchPerson(debug);
+	    PersonList sp = new PersonList(debug);
 	    sp.setRisk_id(id);
 	    sp.setVslegalPersonOnly(); // defendant
 	    String back = sp.lookFor();
@@ -590,18 +604,29 @@ public class Legal extends Risk{
 	}
 	return defendants;
     }
-    public     boolean hasDefendants(){
+    public boolean hasDefendants(){
 	getDefendants();
 	return defendants != null && defendants.size() > 0;
     }
-    public     void setDefendans(List<RiskPerson> vals){
+    public void setDefendans(List<RiskPerson> vals){
 	defendants = vals;
     }
+    public String getEmployeeNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getFullName();
+	    }
+	}
+	return names;
+    }    
     //
     // save a new record in the database
     // return "" or any exception thrown by DB
     //
-    public     String doSave(){
+    public String doSave(){
 
 	Connection con = null;
 	PreparedStatement stmt = null, stmt2=null, stmt3=null;
@@ -638,7 +663,7 @@ public class Legal extends Risk{
 	    qq = " insert into vslegals values (?,?,?,?,?, ?,?,?,?,?,"+
 		"?,?,?,?,?, ?,?,?,?,?,"+
 		"?,?,?,?,?, ?,?,?,?,?,"+
-		"?,?,?,?,?, ?,?)";
+		"?,?,?,?,?, ?,?,?)";
 	    if(debug){
 		logger.debug(qq);
 	    }
@@ -872,6 +897,12 @@ public class Legal extends Risk{
 	    else {
 		stmt.setString(jj++,"y");
 	    }
+	    if(outOfDuty.equals("")){
+		stmt.setNull(jj++, Types.CHAR);
+	    }
+	    else {
+		stmt.setString(jj++,"y");
+	    }	    
 	}
 	catch(Exception ex){
 	    back += ex;
@@ -879,7 +910,7 @@ public class Legal extends Risk{
 	}
 	return back;
     }
-    public  String doUpdate(){
+    public String doUpdate(){
 
 	Connection con = null;
 	PreparedStatement stmt = null;
@@ -894,7 +925,7 @@ public class Legal extends Risk{
 	    "convictionDate=?,collectDate=?,riskToInsur=?,riskToInsurDate=?,insurRecoveryDate=?,"+
 	    "insurCollectDate=?,deductible=?,otherDetails=?,otherType=?,paidByCity=?,"+
 	    "paidByInsur=?,miscByCity=?,recordOnly=?,paidByRisk=?,paidByDef=?,"+
-	    "unableToCollect=? where id=? ";
+	    "unableToCollect=?,outOfDuty=? where id=? ";
 
 	if(debug){
 	    logger.debug(qq);
@@ -909,7 +940,7 @@ public class Legal extends Risk{
 	    stmt = con.prepareStatement(qq);
 	    message = setParams(stmt, false);
 	    if(message.equals("")){
-		stmt.setString(37, id);
+		stmt.setString(38, id);
 		stmt.executeUpdate();
 	    }
 	}
@@ -923,7 +954,7 @@ public class Legal extends Risk{
 	return message; 
     }
     //
-    public     String doDelete(){
+    public String doDelete(){
 	//
 	Connection con = null;
 	PreparedStatement stmt = null, stmt2=null;
@@ -959,7 +990,7 @@ public class Legal extends Risk{
 	}
 	return back;
     }
-    public     String deleteLegalRelated(){
+    public String deleteLegalRelated(){
 	//
 	String back = "";
 	Connection con = null;
@@ -989,7 +1020,7 @@ public class Legal extends Risk{
 	}
 	return back;
     }
-    public     String doDefendantInsert(String pid){
+    public String doDefendantInsert(String pid){
 	//
 	Connection con = null;
 	PreparedStatement stmt = null;
@@ -1021,7 +1052,7 @@ public class Legal extends Risk{
 	}
 	return msg;
     }
-    public     String doDefendantInsert(List<RiskPerson> persons){
+    public String doDefendantInsert(List<RiskPerson> persons){
 	//
 	Connection con = null;
 	PreparedStatement stmt = null;
@@ -1056,7 +1087,7 @@ public class Legal extends Risk{
 	return msg;
     }		
     //
-    public     String doSelect(){
+    public String doSelect(){
 	//
 	Connection con = null;
 	PreparedStatement stmt = null;
@@ -1089,7 +1120,7 @@ public class Legal extends Risk{
 	    "paidByCity,paidByInsur,miscByCity, "+
 	    "recordOnly, "+
 	    "paidByRisk, "+
-	    "paidByDef,unableToCollect "+
+	    "paidByDef,unableToCollect,outOfDuty "+
 	    " from vslegals where id=?";// +id;
 	String str="", message="";
 	if(debug){
@@ -1142,7 +1173,8 @@ public class Legal extends Risk{
 			rs.getString(34),
 			rs.getString(35),
 			rs.getString(36),
-			rs.getString(37));
+			rs.getString(37),
+			rs.getString(38));
 	    }
 	    else{
 		message += "Record "+id+" Not found";

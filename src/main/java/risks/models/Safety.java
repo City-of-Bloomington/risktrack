@@ -13,18 +13,18 @@ import risks.lists.*;
 public class Safety extends Risk{
 
     static Logger logger = LogManager.getLogger(Safety.class);
-    String type="", 
+    public String type="", 
 	status="",
 	accidDate="",accidTime="", reported="", // date
 	accidLocation="",
 	empid="", empName="", deptPhone="", dept="", empSuper="", 
 	empTitle="", empInjured="";
-    String damage="", autoDamage="",
+    public String damage="", autoDamage="",
 	estPlace="", estCost="",
 	estPlace2="",estCost2="",
 	estPlace3="", estCost3="", 
 	totalCost="", chosenDealer="";
-    String propDamage="",
+    public String propDamage="",
 	estPlaceP="", estCostP="",
 	estPlaceP2="",estCostP2="",
 	estPlaceP3="", estCostP3="", 
@@ -32,12 +32,13 @@ public class Safety extends Risk{
 	subToInsur="",autoPaid="",propPaid="", recordOnly="",
 	workComp="",whatProp="",repairInfo="",tortId="", vsId="";
 
-    String vin="", autoNum="",
+    public String vin="", autoNum="",
 	autoMake="", autoModel="", autoYear="";
-    String insurance="",insurStatus="", adjuster="",adjusterPhone="",
+    public String insurance="",insurStatus="", adjuster="",adjusterPhone="",
 	adjusterEmail="", attorney="", attorneyPhone="", attorneyEmail="",
 	deductible="",claimNum="", policy="", otherType="";
-    String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="";
+    public String paidByCity="",paidByInsur="",miscByCity="", paidByRisk="",
+	outOfDuty="";
     List<Employee> workers = null;
     List<Employee> employees = null;
     List<Insurance> insurances = null;
@@ -96,7 +97,8 @@ public class Safety extends Risk{
 		  String val37,
 		  String val38,
 		  String val39,
-		  String val40
+		  String val40,
+		  String val41
 		  ){
 	setVals(val,
 		val2,
@@ -140,7 +142,8 @@ public class Safety extends Risk{
 		val37,
 		val38,
 		val39,
-		val40);
+		val40,
+		val41);
     }
     void setVals(
 		 String val,
@@ -185,7 +188,8 @@ public class Safety extends Risk{
 		 String val37,
 		 String val38,
 		 String val39,
-		 String val40
+		 String val40,
+		 String val41
 		 ){
 	setId(val);
 	setType(val2);
@@ -230,6 +234,7 @@ public class Safety extends Risk{
 	setMiscByCity(val38);
 	setRecordOnly(val39);
 	setPaidByRisk(val40);
+	setOutOfDuty(val41);
     }
 		
     //
@@ -267,6 +272,10 @@ public class Safety extends Risk{
 	if(val != null)
 	    empid = val;
     }
+    public void setOutOfDuty(String val){
+	if(val != null)
+	    outOfDuty = val;
+    }    
     public void setEmpSuper(String val){
 	if(val != null)
 	    empSuper = val;
@@ -507,6 +516,9 @@ public class Safety extends Risk{
     public String  getEmpid(){
 	return empid;
     }
+    public String  getOutOfDuty(){
+	return outOfDuty;
+    }    
     public String  getEmpSuper(){
 	return empSuper;
     }
@@ -709,7 +721,20 @@ public class Safety extends Risk{
 	}
 	return autos;
     }
-
+    public String getEmployeeNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getFullName();
+	    }
+	}
+	return names;
+    }    
+    public  boolean isOffDuty(){
+	return !outOfDuty.isEmpty();
+    }    
     public String toString(){
 	return id;
     }
@@ -780,7 +805,7 @@ public class Safety extends Risk{
 		"(?,?,?,?,?, ?,?,?,?,?,"+
 		" ?,?,?,?,?, ?,?,?,?,?,"+
 		" ?,?,?,?,?, ?,?,?,?,?,"+
-		" ?,?,?,?,?, ?,?,?,?,?)";
+		" ?,?,?,?,?, ?,?,?,?,?, ?)";
 	    logger.debug(qq);
 	    stmt3 = con.prepareStatement(qq);
 	    int jj=1;
@@ -1025,6 +1050,12 @@ public class Safety extends Risk{
 	    else {
 		stmt.setString(jj++, paidByRisk);
 	    }
+	    if(outOfDuty.equals("")){
+		stmt.setNull(jj++, Types.CHAR);
+	    }
+	    else {
+		stmt.setString(jj++, "y");
+	    }
 	}
 	catch(Exception ex){
 	    back += ex;
@@ -1032,7 +1063,7 @@ public class Safety extends Risk{
 	return back;
     }
 				
-    public    String doUpdate(){
+    public String doUpdate(){
 
 	String str="", back="";
 	Connection con = null;
@@ -1051,7 +1082,7 @@ public class Safety extends Risk{
 	    " estCostP2=?,estPlaceP3=?,estCostP3=?,chosenDealerP=?,totalCostP=?,"+
 	    "propDamage=?,propPaid=?,subToInsur=?,empInjured=?,workComp=?,"+
 	    "whatProp=?,repairInfo=?,deductible=?,otherType=?,paidByCity=?,"+
-	    "paidByInsur=?,miscByCity=?,recordOnly=?,paidByRisk=? where id=? ";
+	    "paidByInsur=?,miscByCity=?,recordOnly=?,paidByRisk=?,outOfduty=? where id=? ";
 
 
 	//
@@ -1063,7 +1094,7 @@ public class Safety extends Risk{
 	    stmt = con.prepareStatement(qq);
 	    back = setData(stmt, false);
 	    if(back.equals("")){
-		stmt.setString(40, id);
+		stmt.setString(41, id);
 		stmt.executeUpdate();
 	    }
 	}
@@ -1077,7 +1108,7 @@ public class Safety extends Risk{
 	return back;
     }
     //
-    public     String doDelete(){
+    public String doDelete(){
 	//
 	// System.err.println("delete record");
 	//
@@ -1158,7 +1189,7 @@ public class Safety extends Risk{
 	    " deductible,"+
 	    " otherType, "+
 	    " paidByCity,paidByInsur,miscByCity, "+
-	    " recordOnly,paidByRisk "+ 
+	    " recordOnly,paidByRisk,outOfDuty "+ 
 	    " from riskSafety where id=?";// 40
 	String str="", back="";
 	if(debug){
@@ -1212,7 +1243,8 @@ public class Safety extends Risk{
 			rs.getString(36),
 			rs.getString(37),
 			rs.getString(38),
-			rs.getString(39));
+			rs.getString(39),
+			rs.getString(40));
 	    }
 	}
 	catch(Exception ex){

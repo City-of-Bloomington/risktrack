@@ -455,7 +455,7 @@ public class SearchWCompServ extends TopServlet{
 	out.println("<div id=\"mainContent\">");
 	out.println("<h2>Search Worker Comp</h2>");
 
-	SearchWComp sw = new SearchWComp(debug);
+	WCompList sw = new WCompList(debug);
 	if(!id.isEmpty()){
 	    sw.setId(id);
 	}

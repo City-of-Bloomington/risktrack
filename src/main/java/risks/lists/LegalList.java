@@ -1,4 +1,4 @@
-package risks.models;
+package risks.lists;
 
 import java.util.*;
 import java.sql.*;
@@ -8,10 +8,13 @@ import java.text.SimpleDateFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import risks.utils.Helper;
+import risks.models.*;
 
-public class SearchLegal extends Legal{
 
-    static Logger logger = LogManager.getLogger(SearchLegal.class);
+public class LegalList extends Legal{
+
+    static Logger logger = LogManager.getLogger(LegalList.class);
+    static boolean debug = false;
     SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");			
     String idArr[] = null;
     String dateFrom="", dateTo="";
@@ -20,49 +23,61 @@ public class SearchLegal extends Legal{
     String whichAmount="", orderBy="l.id desc";
     //
     // person related parameters
-    String personName="",personPhone="",personDob="";
-				
+    String personName="",personPhone="",personDob="", id="", onOffDuty="";
     List<Legal> legals = null;
     Auto auto = null;
     //
-    // basic constructor
-    public SearchLegal(boolean deb){
-
+    public LegalList(boolean deb){
 	super(deb);
+	debug = deb;
 	//
     }
     //
     // setters
     //
+    @Override
+    public void setId(String val){
+	if(val != null)
+	    id = val;
+    }    
     public void setDateFrom(String val){
-	dateFrom = val;
+	if(val != null)
+	    dateFrom = val;
     }
     public void setDateTo(String val){
-	dateTo = val;
+	if(val != null)
+	    dateTo = val;
     }
     public void setClaimNum(String val){
-	claimNum = val;
+	if(val != null)
+	    claimNum = val;
     }		
     public void setWhichDate(String val){
-	whichDate = val;
+	if(val != null)
+	    whichDate = val;
     }
     public void setAmountFrom(String val){
-	amountFrom = val;
+	if(val != null)
+	    amountFrom = val;
     }
     public void setAmountTo(String val){
-	amountTo = val;
+	if(val != null)
+	    amountTo = val;
     }
     public void setWhichAmount(String val){
-	whichAmount = val;
+	if(val != null)
+	    whichAmount = val;
     }
     public void setOrderBy(String val){
-	orderBy = val;
+	if(val != null)
+	    orderBy = val;
 	if(!orderBy.equals(""))
 	    orderBy = "l."+orderBy;
     }
 
     public void setAuto(Auto val){
-	auto = val;
+	if(val != null)
+	    auto = val;
     }
     public void setPersonName(String val){
 	if(val != null)
@@ -124,7 +139,10 @@ public class SearchLegal extends Legal{
 	if(val != null)
 	    defAttorneyPhone = val;
     }
-		
+    public void setOnOffDuty(String val){
+	if(val != null)
+	    onOffDuty = val;
+    }        		
     //
     // getters
     //
@@ -173,7 +191,7 @@ public class SearchLegal extends Legal{
 	    "l.paidByCity,l.paidByInsur,l.miscByCity, "+
 	    "l.recordOnly, "+
 	    "l.paidByRisk, "+
-	    "l.paidByDef,l.unableToCollect ";
+	    "l.paidByDef,l.unableToCollect,l.outOfDuty ";
 
 	if(!id.equals("")){
 	    qw += " l.id = ?";//+id;
@@ -306,7 +324,19 @@ public class SearchLegal extends Legal{
 		if(!qw.equals("")) qw += " and ";
 		qw += "p.dob = ? ";
 		personFlag = true;
-	    }						
+	    }
+	    if(!onOffDuty.isEmpty()){
+		if(!qw.equals(""))
+		    qw += " and ";
+		if(onOffDuty.startsWith("on")){
+		    qw += "l.outOfDuty is null";
+		}
+		else{
+		    qw += "l.outOfDuty is not null ";
+		}
+	    }				
+
+	    
 	    if(empFlag){
 		qf += " join empRelated er on er.risk_id=l.id join employees e on e.id = er.employee_id left join deptRelated dr on dr.related_id=l.id ";
 								
@@ -534,7 +564,8 @@ public class SearchLegal extends Legal{
 			      rs.getString(34),
 			      rs.getString(35),
 			      rs.getString(36),
-			      rs.getString(37));
+			      rs.getString(37),
+			      rs.getString(38));
 		if(!legals.contains(one)){
 		    legals.add(one);
 		}

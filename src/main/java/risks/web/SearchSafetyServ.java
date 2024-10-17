@@ -602,7 +602,7 @@ public class SearchSafetyServ extends TopServlet{
 	out.println(Inserts.sideBar(url));
 
 	out.println("<div id=\"mainContent\">");
-	SearchSafety sc = new SearchSafety(debug);
+	SafetyList sc = new SafetyList(debug);
 	Auto auto = null;
 	if(!id.equals("")){
 	    sc.setId(id);

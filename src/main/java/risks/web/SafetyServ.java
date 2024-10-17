@@ -64,7 +64,7 @@ public class SafetyServ extends TopServlet{
 	    estp_1="",estp_2="",estp_3="",
 	    repairInfo="", safeId="",
 	    propDamage="",autoDamage="",workComp="",whatProp="", 
-	    tortId="", vsId="", recordOnly="", balance="";
+	    tortId="", vsId="", recordOnly="", balance="", outOfDuty="";
 	
 	boolean connectDbOk = false, success = true;
        	String message = "", action = "",entry_time = "", 
@@ -179,6 +179,9 @@ public class SafetyServ extends TopServlet{
 	    else if (name.equals("propPaid")) {
 		propPaid = value;
 	    }
+	    else if (name.equals("outOfDuty")) {
+		outOfDuty = value;
+	    }	    
 	    else if (name.equals("vin")) {
 		vin = value;
 	    }
@@ -480,6 +483,7 @@ public class SafetyServ extends TopServlet{
 		    miscByCity = sf.getMiscByCity();
 		    paidByInsur = sf.getPaidByInsur();
 		    recordOnly = sf.getRecordOnly();
+		    outOfDuty = sf.getOutOfDuty();
 		    status = "Open";
 		    action = "Save";
 		    relatedId = safeId;
@@ -546,6 +550,7 @@ public class SafetyServ extends TopServlet{
 	    sf.setPaidByInsur(paidByInsur);
 	    sf.setMiscByCity(miscByCity);
 	    sf.setRecordOnly(recordOnly);
+	    sf.setOutOfDuty(outOfDuty);
 	    String back = sf.doSave();
 	    if(back.equals("")){
 		id = sf.getId();
@@ -663,6 +668,7 @@ public class SafetyServ extends TopServlet{
 	    sf.setPaidByInsur(paidByInsur);
 	    sf.setMiscByCity(miscByCity);
 	    sf.setRecordOnly(recordOnly);
+	    sf.setOutOfDuty(outOfDuty);
 	    String back = sf.doUpdate();
 	    if(!back.equals("")){
 		message += back;
@@ -775,6 +781,7 @@ public class SafetyServ extends TopServlet{
 		miscByCity = sf.getMiscByCity();
 		paidByInsur = sf.getPaidByInsur();
 		recordOnly = sf.getRecordOnly();
+		outOfDuty = sf.getOutOfDuty();
 		if(!chosenDealer.equals("")){
 		    int dealer = Integer.parseInt(chosenDealer);
 		    switch(dealer){
@@ -832,6 +839,8 @@ public class SafetyServ extends TopServlet{
 	if(!propPaid.equals("")) propPaid = "checked";
 	if(!workComp.equals("")) workComp = "checked";
 	if(!recordOnly.equals("")) recordOnly = "checked";
+	if(!outOfDuty.equals("")) outOfDuty = "checked";
+	
 	if(!prevAction.equals("") && action.equals("")) 
 	    action = prevAction;
 	if(!prevAction.equals("")) action = prevAction;
@@ -1035,8 +1044,13 @@ public class SafetyServ extends TopServlet{
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"workComp\" "+
 		    "id=\"workComp\" value=\"y\" "+workComp+" />");
-	out.println("<label for=\"workComp\">Worker's Comp?</label>");
+	out.println("<label for=\"workComp\">Worker's Comp</label>");
 	out.println("</td></tr>");
+	out.println("<tr><td>");	
+	out.println("<input type=\"checkbox\" name=\"outOfDuty\" "+
+		    "id=\"outofduty\" value=\"y\" "+outOfDuty+" />");
+	out.println("<label for=\"outofduty\">Accident Off Duty Time</label>");
+	out.println("</td></tr>");	
 	out.println("<tr><td>");
 	out.println("<input type=\"checkbox\" name=\"autoDamage\" "+
 		    "onclick=\"doUpdate()\" "+

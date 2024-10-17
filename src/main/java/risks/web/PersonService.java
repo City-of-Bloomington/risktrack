@@ -70,11 +70,11 @@ public class PersonService extends HttpServlet{
 		// System.err.println(name+" "+value);
 	    }
 	}
-	SearchPerson sp =  null;
+	PersonList sp =  null;
 	List<RiskPerson> persons = null;
 	if(term.length() > 1){
 	    //
-	    sp = new SearchPerson(debug);
+	    sp = new PersonList(debug);
 	    sp.setName(term);
 	    String back = sp.lookFor();
 	    if(back.equals("")){

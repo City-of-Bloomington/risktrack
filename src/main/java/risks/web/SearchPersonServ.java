@@ -402,7 +402,7 @@ public class SearchPersonServ extends TopServlet{
 	out.println("<div id=\"mainContent\">");
 	out.println("<h1>Search Claimant/Defendants</h1>");
 
-	SearchPerson sp = new SearchPerson(debug);
+	PersonList sp = new PersonList(debug);
 	if(!id.equals("")){
 	    sp.setId(id);
 	}

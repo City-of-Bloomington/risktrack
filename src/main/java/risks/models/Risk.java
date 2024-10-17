@@ -28,17 +28,17 @@ public class Risk{
 	setId(val);
 
     }
-    public     void setId(String val){
+    public void setId(String val){
 	if(val != null)
 	    id = val;
     }
     //
     // getters
     //
-    public     String  getId(){
+    public String  getId(){
 	return id;
     }
-    public     List<Note> getNotes(){
+    public List<Note> getNotes(){
 	if(notes == null && !id.equals("")){
 	    NoteList sp = new NoteList(debug, id);
 	    String back = sp.find();
@@ -51,11 +51,11 @@ public class Risk{
 	}
 	return notes;
     }
-    public     boolean hasNotes(){
+    public boolean hasNotes(){
 	getNotes();
 	return notes != null && notes.size() > 0;
     }
-    public     List<RiskFile> getFiles(){
+    public List<RiskFile> getFiles(){
 	if(files == null && !id.equals("")){
 	    RiskFileList sp = new RiskFileList(debug, id);
 	    String back = sp.find();
@@ -68,7 +68,7 @@ public class Risk{
 	}
 	return files;
     }
-    public     boolean hasFiles(){
+    public boolean hasFiles(){
 	getFiles();
 	return files != null && files.size() > 0;
     }				
