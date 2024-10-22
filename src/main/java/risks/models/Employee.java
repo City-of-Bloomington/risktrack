@@ -144,9 +144,12 @@ public class Employee{
     }
     public String getDeptName(){
 	if(department == null){
-	    setDepartment();
+	    getDepartment();
 	}
-	return department.getName();
+	if(department !=  null)
+	    return department.getName();
+	else
+	    return "";
     }	
     public String getDeptPhone(){
 	String str = deptPhone;

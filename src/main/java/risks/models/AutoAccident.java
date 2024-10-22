@@ -554,6 +554,17 @@ public class AutoAccident extends Risk{
 	}
 	return names;
     }
+    public String getDeptNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getDeptName();
+	    }
+	}
+	return names;
+    }         
     //
     // save a new record in the database
     // return "" or any exception thrown by DB

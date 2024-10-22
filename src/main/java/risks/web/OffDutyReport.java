@@ -254,7 +254,8 @@ public class OffDutyReport extends TopServlet{
 		out.println("<th>Status</th>");
 		out.println("<th>Incident Date</th>");
 		out.println("<th>Off Duty?</th>");		
-		out.println("<th>Employee</th>");
+		out.println("<th>Employee(s)</th>");
+		out.println("<th>Department</th>");		
 		out.println("</tr>");
 		for(List<String> one:lists){
 		    out.println("<tr>");
@@ -264,6 +265,7 @@ public class OffDutyReport extends TopServlet{
 		    out.println("<td>"+one.get(3)+"</td>");
 		    out.println("<td>"+one.get(4)+"</td>");
 		    out.println("<td>"+one.get(5)+"</td>");
+		    out.println("<td>"+one.get(6)+"</td>");		    
 		    out.println("</tr>");
 		}
 		out.println("<table>");
@@ -283,15 +285,17 @@ public class OffDutyReport extends TopServlet{
 	    out.print("\"Id\",");
 	    out.print("\"Status\",");
 	    out.print("\"Incident Date\",");
-	    out.print("\"Off Duty\",");	    	    
-	    out.print("\"Employee\"\n");
+	    out.print("\"Off Duty\",");
+	    out.print("\"Employee(s)\",");	    
+	    out.print("\"Department\"\n");
 	    for(List<String> one:lists){
  		out.print("\""+one.get(0)+"\",");
 		out.print("\""+one.get(1)+"\",");
 		out.print("\""+one.get(2)+"\",");
 		out.print("\""+one.get(3)+"\",");
 		out.print("\""+one.get(4)+"\",");
-		out.print("\""+one.get(5)+"\"\n");		
+		out.print("\""+one.get(5)+"\",");		
+		out.print("\""+one.get(6)+"\"\n");		
 	    }
 	    out.close();
 	}

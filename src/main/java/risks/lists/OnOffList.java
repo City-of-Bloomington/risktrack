@@ -126,6 +126,7 @@ public class OnOffList{
 			 ll.add("Out Off Duty");
 		     else ll.add("");
 		     ll.add(one.getEmployeeNames());
+		     ll.add(one.getDeptNames());		     
 		     combined.add(ll);
 		 }
 	     }
@@ -155,6 +156,7 @@ public class OnOffList{
 			 ll.add("Out Off Duty");
 		     else ll.add("");		     
 		     ll.add(one.getEmployeeNames());
+		     ll.add(one.getDeptNames());		     
 		     combined.add(ll);
 		 }
 	     }
@@ -184,7 +186,9 @@ public class OnOffList{
 			 ll.add("Out Off Duty");
 		     else ll.add("");
 		     ll.add(one.getEmployeeNames());
+		     ll.add(one.getDeptNames());		     
 		     combined.add(ll);
+		     
 		 }
 	     }
 	 }
@@ -212,6 +216,7 @@ public class OnOffList{
 			 ll.add("Out Off Duty");
 		     else ll.add("");		     
 		     ll.add(one.getEmployeeNames());
+		     ll.add(one.getDeptNames());
 		     combined.add(ll);
 		 }
 	     }

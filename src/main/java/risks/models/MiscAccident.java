@@ -504,7 +504,18 @@ public class MiscAccident extends Risk{
 	    }
 	}
 	return names;
-    }    
+    }
+    public String getDeptNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getDeptName();
+	    }
+	}
+	return names;
+    }         
     public String toString(){
 	return id;
     }

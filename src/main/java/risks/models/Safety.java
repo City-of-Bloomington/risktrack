@@ -731,7 +731,18 @@ public class Safety extends Risk{
 	    }
 	}
 	return names;
-    }    
+    }
+    public String getDeptNames(){
+	String names = "";
+	getEmployees();
+	if(employees != null){
+	    for(Employee one:employees){
+		if(!names.isEmpty()) names += "; ";
+		names += one.getDeptName();
+	    }
+	}
+	return names;
+    }         
     public  boolean isOffDuty(){
 	return !outOfDuty.isEmpty();
     }    
