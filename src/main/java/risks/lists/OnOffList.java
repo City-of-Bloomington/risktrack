@@ -171,7 +171,7 @@ public class OnOffList{
 	 String back = aal.lookFor();
 	 if(back.isEmpty()){
 	     safetys = aal.getSafetyList();
-	     if(safetys != null && safetys.size() >0)
+	     if(safetys != null && safetys.size() >0){
 		 if(combined == null)
 		     combined = new ArrayList<>();
 		 for(Safety one:safetys){
@@ -186,7 +186,7 @@ public class OnOffList{
 		     ll.add(one.getEmployeeNames());
 		     combined.add(ll);
 		 }
-	     
+	     }
 	 }
     }
     void findMisc(){

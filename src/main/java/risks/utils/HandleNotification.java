@@ -85,7 +85,6 @@ public class HandleNotification{
 	}
 	if(activeMail){
 	    NotificationLog noteLog = new NotificationLog(debug);
-	    String note_msg = "The notification included the following claims: ";
 	    String subject = "RiskTrack 30 or 75 days claim notification ";
 	    String body_text ="This is an automated message from the RT app.\n";	    
 	    body_text += "RT app found the following clains has 30 or 75 days since the received date.\n\n";	    
@@ -98,17 +97,15 @@ public class HandleNotification{
 		    body_text += "Details: "+one.getIncident()+"\n";
 		}
 		body_text += " -----------\n\n ";
-		if(!note_msg.isEmpty()) note_msg += ", ";
-		note_msg += one.getId();
 	    }
 	    noteLog.setReceiver(receiver);
-	    noteLog.setMessage(note_msg);
+	    noteLog.setMessage(body_text);
 	    Properties props = new Properties();
 	    props.put("mail.smtp.host", mail_host);
 				
 	    Session session = Session.getDefaultInstance(props, null);
 	    try{
-		Message message = new MimeMessage(session);						
+		Message message = new MimeMessage(session);
 		message.setSubject(subject);
 		message.setText(body_text);
 		message.setFrom(new InternetAddress(mail_from));

@@ -39,31 +39,40 @@ public class SafetyList extends Safety{
 	    id = val;
     }        
     public void setDateFrom(String val){
+	if(val != null)	
 	dateFrom = val;
     }
     public void setDateTo(String val){
+	if(val != null)
 	dateTo = val;
     }
     public void setWhichDate(String val){
+	if(val != null)
 	whichDate = val;
     }
     public void setAmountFrom(String val){
+	if(val != null)
 	amountFrom = val;
     }
     public void setAmountTo(String val){
+	if(val != null)
 	amountTo = val;
     }
     public void setWhichAmount(String val){
+	if(val != null)
 	whichAmount = val;
     }
     public void setOrderBy(String val){
+	if(val != null)
 	orderBy = val;
     }
     public void setAnyEstPlace(String val){
+	if(val != null)
 	anyEstPlace = val;
     }
     public void setAuto(Auto val){
-	auto = val;
+	if(val != null)
+	    auto = val;
     }
     public void setOnOffDuty(String val){
 	if(val != null)
@@ -165,7 +174,7 @@ public class SafetyList extends Safety{
 		qw += " upper(i.attorney) like ?";// '%"+attorney+"%'";
 		insurFlag = true;
 	    }
-	    if(!attorneyPhone.equals("")){
+	    if(attorneyPhone != null && !attorneyPhone.equals("")){
 		if(!qw.equals("")) qw += " and ";
 		qw += " i.attorneyPhone like ?";// '%"+attorneyPhone+"%'";
 		insurFlag = true;
